@@ -1,0 +1,115 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "proofblocks/banner",
+  "title": "Banner / CTA",
+  "category": "proofblocks",
+  "icon": "megaphone",
+  "description": "An image, heading, text, and call-to-action banner.",
+  "keywords": [
+    "banner",
+    "cta",
+    "call to action"
+  ],
+  "textdomain": "proofblocks",
+  "attributes": {
+    "mediaId": {
+      "type": "number"
+    },
+    "mediaUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "mediaAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "text": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaText": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaNewTab": {
+      "type": "boolean",
+      "default": false
+    },
+    "layout": {
+      "type": "string",
+      "default": "img-left"
+    },
+    "token": {
+      "type": "string",
+      "default": "classic-blue"
+    },
+    "textAlign": {
+      "type": "string",
+      "default": "left"
+    },
+    "shape": {
+      "type": "string",
+      "default": "rounded"
+    },
+    "animation": {
+      "type": "string",
+      "default": "none"
+    },
+    "videoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "parallax": {
+      "type": "boolean",
+      "default": false
+    },
+    "countdownEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "countdownDate": {
+      "type": "string",
+      "default": ""
+    },
+    "countdownExpiredText": {
+      "type": "string",
+      "default": ""
+    },
+    "secondaryCtaText": {
+      "type": "string",
+      "default": ""
+    },
+    "secondaryCtaUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "font": {
+      "type": "string",
+      "default": ""
+    },
+    "textStyle": {
+      "type": "string",
+      "default": "normal"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

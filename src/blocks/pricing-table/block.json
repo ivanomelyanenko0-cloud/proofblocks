@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "proofblocks/pricing-table",
+  "title": "Pricing Table",
+  "category": "proofblocks",
+  "icon": "money-alt",
+  "description": "A pricing table with 2 or more plan columns.",
+  "keywords": [
+    "pricing",
+    "plans",
+    "table"
+  ],
+  "textdomain": "proofblocks",
+  "attributes": {
+    "token": {
+      "type": "string",
+      "default": "classic-blue"
+    },
+    "billingToggle": {
+      "type": "boolean",
+      "default": false
+    },
+    "shape": {
+      "type": "string",
+      "default": "rounded"
+    },
+    "cardStyle": {
+      "type": "string",
+      "default": "bordered"
+    },
+    "animation": {
+      "type": "string",
+      "default": "none"
+    },
+    "font": {
+      "type": "string",
+      "default": ""
+    },
+    "textStyle": {
+      "type": "string",
+      "default": "normal"
+    }
+  },
+  "providesContext": {
+    "proofblocks/pricingToken": "token"
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

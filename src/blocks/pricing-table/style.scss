@@ -1,0 +1,18 @@
+@use "../../shared/design-tokens" as tokens;
+@use "../../shared/animations" as anim;
+
+.wp-block-proofblocks-pricing-table {
+	align-items: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5rem;
+	justify-content: center;
+
+	@include tokens.pb-token-classes;
+	@include tokens.pb-shape-classes;
+	@include tokens.pb-card-classes;
+	@include tokens.pb-font-classes;
+	@include tokens.pb-textstyle-classes;
+}
+
+@include anim.pb-animation-classes(".wp-block-proofblocks-pricing-table");

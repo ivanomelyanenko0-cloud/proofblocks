@@ -1,0 +1,57 @@
+@use "../../shared/design-tokens" as tokens;
+@use "../../shared/animations" as anim;
+
+.wp-block-proofblocks-counter {
+	align-items: center;
+	background: var(--pb-card-bg, transparent);
+	border: 1px solid var(--pb-card-border-color, transparent);
+	border-radius: min(var(--pb-radius, 8px), 32px);
+	box-shadow: var(--pb-card-shadow, none);
+	display: inline-flex;
+	flex-direction: column;
+	padding: 1em;
+	text-align: center;
+
+	@include tokens.pb-token-classes;
+	@include tokens.pb-card-classes;
+	@include tokens.pb-font-classes;
+	@include tokens.pb-textstyle-classes;
+
+	&.proofblocks-counter--icon-inline {
+		align-items: baseline;
+		column-gap: .4em;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+
+		.proofblocks-counter__icon-svg {
+			align-self: center;
+			margin-bottom: 0;
+		}
+
+		.proofblocks-counter__label {
+			flex-basis: 100%;
+		}
+	}
+}
+
+@include anim.pb-animation-classes(".wp-block-proofblocks-counter");
+
+.proofblocks-counter__icon-svg {
+	color: var(--pb-color-primary, currentColor);
+	margin-bottom: .4em;
+}
+
+.proofblocks-counter__value {
+	color: var(--pb-color-primary, inherit);
+	font-size: 2.5em;
+	font-variant-numeric: tabular-nums;
+	font-weight: 700;
+	line-height: 1.1;
+}
+
+.proofblocks-counter__label {
+	font-size: .9em;
+	margin-top: .25em;
+	opacity: .75;
+}

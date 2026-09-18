@@ -1,0 +1,30 @@
+.proofblocks-column__feature-toggle {
+	align-items: center;
+	background: none;
+	border: 0;
+	cursor: pointer;
+	display: flex;
+	padding: 2px;
+}
+
+.proofblocks-icon--check {
+	color: #16a34a;
+}
+
+.proofblocks-icon--cross {
+	color: #dc2626;
+}
+
+.proofblocks-column__cta.is-empty-placeholder {
+	background: transparent;
+	border: 1px dashed var(--pb-color-primary, #2563eb);
+	color: var(--pb-color-primary, #2563eb);
+	opacity: .7;
+}
+
+.proofblocks-column__cta-hint {
+	font-size: .8em;
+	font-style: italic;
+	margin: .35em 0 0;
+	opacity: .7;
+}

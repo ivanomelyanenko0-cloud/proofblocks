@@ -1,0 +1,6 @@
+@use "../../shared/editor-controls";
+
+.wp-block-proofblocks-banner .proofblocks-banner__media img {
+	max-height: 240px;
+	object-fit: cover;
+}

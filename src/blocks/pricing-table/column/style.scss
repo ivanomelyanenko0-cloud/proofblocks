@@ -1,0 +1,115 @@
+.wp-block-proofblocks-pricing-column {
+	background: var(--pb-card-bg, var(--pb-color-bg, #fff));
+	border: 1px solid var(--pb-card-border-color, rgba(0, 0, 0, .08));
+	border-radius: min(var(--pb-radius, 8px), 32px);
+	box-shadow: var(--pb-card-shadow, none);
+	color: var(--pb-color-text, #0f172a);
+	flex: 1 1 240px;
+	max-width: 360px;
+	padding: 2rem 1.5rem;
+	position: relative;
+	text-align: center;
+
+	&.is-popular {
+		border-color: var(--pb-color-primary, #2563eb);
+		box-shadow: 0 4px 16px rgba(0, 0, 0, .08);
+
+		&.popular-style-ribbon {
+			overflow: hidden;
+
+			.proofblocks-column__badge {
+				border-radius: 0;
+				left: auto;
+				right: -2.75em;
+				top: 1em;
+				transform: rotate(45deg);
+				width: 9em;
+			}
+		}
+
+		&.popular-style-scale {
+			box-shadow: 0 8px 24px rgba(0, 0, 0, .14);
+			transform: scale(1.06);
+			z-index: 1;
+		}
+	}
+}
+
+.proofblocks-column__badge {
+	background: var(--pb-color-accent, #f59e0b);
+	border-radius: 999px;
+	color: #1c1917;
+	font-size: 12px;
+	font-weight: 600;
+	left: 50%;
+	padding: .25em .75em;
+	position: absolute;
+	top: -.75em;
+	transform: translateX(-50%);
+}
+
+.proofblocks-column__name {
+	font-size: 1.25em;
+	margin: .5em 0;
+}
+
+.proofblocks-column__price-row {
+	margin-bottom: 1em;
+}
+
+.proofblocks-column__price {
+	color: var(--pb-color-primary, #2563eb);
+	font-size: 2.5em;
+	font-weight: 700;
+}
+
+.proofblocks-column__period {
+	font-size: .9em;
+	opacity: .7;
+}
+
+.proofblocks-column__features {
+	list-style: none;
+	margin: 0 0 1.5em;
+	padding: 0;
+	text-align: left;
+}
+
+.proofblocks-column__feature {
+	align-items: center;
+	display: flex;
+	gap: .5em;
+	padding: .4em 0;
+
+	&:before {
+		border-radius: 50%;
+		content: "";
+		flex-shrink: 0;
+		height: 16px;
+		width: 16px;
+	}
+
+	&.is-included:before {
+		background: var(--pb-color-primary, #2563eb);
+		clip-path: polygon(15% 50%, 40% 75%, 85% 20%, 100% 35%, 40% 100%, 0 60%);
+	}
+
+	&.is-excluded {
+		opacity: .4;
+
+		&:before {
+			background: currentColor;
+			clip-path: polygon(10% 0, 0 10%, 40% 50%, 0 90%, 10% 100%, 50% 60%, 90% 100%, 100% 90%, 60% 50%, 100% 10%, 90% 0, 50% 40%);
+		}
+	}
+}
+
+.proofblocks-column__cta {
+	background: var(--pb-color-primary, #2563eb);
+	border-radius: min(var(--pb-radius, 4px), 40px);
+	color: #fff;
+	display: inline-block;
+	font-weight: 600;
+	padding: .6em 1.5em;
+	text-decoration: none;
+}

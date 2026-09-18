@@ -1,0 +1,88 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "proofblocks/counter",
+  "title": "Counter / Countdown",
+  "category": "proofblocks",
+  "icon": "clock",
+  "description": "An animated number counter or a countdown to a date.",
+  "keywords": [
+    "counter",
+    "countdown",
+    "timer"
+  ],
+  "textdomain": "proofblocks",
+  "attributes": {
+    "mode": {
+      "type": "string",
+      "default": "number"
+    },
+    "numberValue": {
+      "type": "number",
+      "default": 100
+    },
+    "numberPrefix": {
+      "type": "string",
+      "default": ""
+    },
+    "numberSuffix": {
+      "type": "string",
+      "default": ""
+    },
+    "numberDuration": {
+      "type": "number",
+      "default": 2000
+    },
+    "countdownDate": {
+      "type": "string",
+      "default": ""
+    },
+    "countdownExpiredText": {
+      "type": "string",
+      "default": ""
+    },
+    "label": {
+      "type": "string",
+      "default": ""
+    },
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
+    "iconPosition": {
+      "type": "string",
+      "default": "stacked"
+    },
+    "style": {
+      "type": "string",
+      "default": "basic"
+    },
+    "token": {
+      "type": "string",
+      "default": ""
+    },
+    "cardStyle": {
+      "type": "string",
+      "default": "flat"
+    },
+    "animation": {
+      "type": "string",
+      "default": "none"
+    },
+    "font": {
+      "type": "string",
+      "default": ""
+    },
+    "textStyle": {
+      "type": "string",
+      "default": "normal"
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

@@ -1,0 +1,17 @@
+.distignore
+.editorconfig
+.git
+.gitattributes
+.gitignore
+.wordpress-org
+node_modules
+src
+package.json
+package-lock.json
+composer.json
+composer.lock
+phpunit.xml.dist
+.phpcs.xml.dist
+tests
+Gruntfile.js
+webpack.config.js

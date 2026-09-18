@@ -1,0 +1,67 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "proofblocks/pricing-column",
+  "title": "Pricing Column",
+  "category": "proofblocks",
+  "parent": [
+    "proofblocks/pricing-table"
+  ],
+  "icon": "index-card",
+  "description": "A single plan column inside a Pricing Table.",
+  "textdomain": "proofblocks",
+  "attributes": {
+    "planName": {
+      "type": "string",
+      "default": ""
+    },
+    "price": {
+      "type": "string",
+      "default": ""
+    },
+    "period": {
+      "type": "string",
+      "default": ""
+    },
+    "features": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
+    },
+    "isPopular": {
+      "type": "boolean",
+      "default": false
+    },
+    "badgeText": {
+      "type": "string",
+      "default": ""
+    },
+    "popularStyle": {
+      "type": "string",
+      "default": "border-glow"
+    },
+    "ctaText": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaNewTab": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "usesContext": [
+    "proofblocks/pricingToken"
+  ],
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

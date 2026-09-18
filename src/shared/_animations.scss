@@ -1,0 +1,19 @@
+// `animation` attribute: none/fade/slide, gated behind a `.pb-has-anim-support`
+// class that view.js adds to <html> only when IntersectionObserver is
+// available - browsers without it just render the block visible immediately
+// (no opacity:0 flash with no JS ever able to remove it).
+@mixin pb-animation-classes($wrapper) {
+	.pb-has-anim-support #{$wrapper}.proofblocks-anim-fade:not(.is-pb-visible),
+	.pb-has-anim-support #{$wrapper}.proofblocks-anim-slide:not(.is-pb-visible) {
+		opacity: 0;
+	}
+	.pb-has-anim-support #{$wrapper}.proofblocks-anim-slide:not(.is-pb-visible) {
+		transform: translateY(24px);
+	}
+	.pb-has-anim-support #{$wrapper}.proofblocks-anim-fade.is-pb-visible,
+	.pb-has-anim-support #{$wrapper}.proofblocks-anim-slide.is-pb-visible {
+		opacity: 1;
+		transform: none;
+		transition: opacity .6s ease, transform .6s ease;
+	}
+}
