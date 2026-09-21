@@ -45,6 +45,15 @@ function prfbl_render_pricing_table( $attributes, $content ) {
 		$classes[] = 'proofblocks-textstyle-' . $text_style;
 	}
 
+	// This wrapper is built by hand rather than via
+	// get_block_wrapper_attributes(), so the alignment class core would
+	// otherwise add for supports.align (wide/full) has to be added here or
+	// the editor's Wide/Full setting is silently ignored on the frontend.
+	$align = prfbl_validate_enum( isset( $attributes['align'] ) ? $attributes['align'] : '', array( 'wide', 'full' ), '' );
+	if ( $align ) {
+		$classes[] = 'align' . $align;
+	}
+
 	$wrapper_attributes = array(
 		'class' => implode( ' ', $classes ),
 	);
@@ -66,6 +75,7 @@ function prfbl_render_pricing_table( $attributes, $content ) {
 	// the old <div> ends up double-wrapped inside the new one instead of replaced.
 	$inner = preg_replace( '/^\s*<div[^>]*>/', '', $content, 1 );
 	$inner = preg_replace( '/<\/div>\s*$/', '', $inner, 1 );
+	$inner = wp_kses( $inner, prfbl_block_body_allowed_html() );
 
 	do_action( 'proofblocks_after_render_block', 'proofblocks/pricing-table', $attributes );
 

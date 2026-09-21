@@ -28,6 +28,12 @@ Need more plan columns, premium gradients and an animated "popular" badge, a mon
 
 This plugin does not connect to any external service. No data leaves your site. All block content is stored in your own WordPress database as standard post content, like any other block.
 
+== Source code ==
+
+The JavaScript and CSS in the `build/` folder are compiled from the human-readable sources in the plugin's `src/` folder (also shipped inside this plugin, together with `package.json`), using [@wordpress/scripts](https://www.npmjs.com/package/@wordpress/scripts) (webpack). The full development repository is public: https://github.com/ivanomelyanenko0-cloud/proofblocks
+
+To rebuild the compiled files: run `npm install`, then `npm run build` in the plugin folder.
+
 == Installation ==
 
 1. Upload the `proofblocks` folder to `/wp-content/plugins/`, or install it directly from the WordPress plugin directory.
@@ -50,13 +56,18 @@ The block content stays in your page as standard HTML - it doesn't disappear, th
 
 == Screenshots ==
 
-1. Editing a Pricing Table in the Block Editor.
-2. A Banner block on the frontend.
-3. A Counter block animating into view.
+1. Pricing Table with the Corporate design preset.
+2. Pricing Table with the Playful design preset, with the popular plan marked by a corner ribbon.
+3. Banner / CTA block with the Bold design preset and the image on top.
+4. Counter blocks with icons, side by side in a Columns layout.
+5. The Style panel in the Block Editor: one-click design presets, color swatches, corners, card style, animation, font, and text style.
 
 == Changelog ==
 
 = 1.0.2 =
+* Fixed the Wide/Full alignment set on a Pricing Table or Banner in the editor being ignored on the frontend - both blocks now keep their `alignwide`/`alignfull` class.
+* Fixed the Banner being 64px wider than its container (its padding was added on top of its width), which pushed it out of line with the surrounding content and past the Wide/Full width.
+* Fixed a long Counter number being split across two lines mid-digit when the Counter sits in a narrow column (for example inside a Columns block).
 * New "Position" control for the Counter block (Left/Center/Right), measured from the edges of your theme's content column so it lines up with the text and blocks around it. Previously the Counter sat at the far left of the full page width with no way to change that.
 * Fixed the Counter block shipping with no CSS at all (editor or frontend) - its build entry point never imported its own stylesheet, so an unstyled Counter (most visible with Pro's "ring" style, which stretched to an enormous unconstrained square) fell back to browser defaults instead of the block's real layout.
 * Refreshed the Minimal, Bold, Corporate, and Playful design presets to match new reference mockups: Minimal now uses Rounded corners with a Bordered card (previously Sharp/Flat); Corporate now uses the Serif font; Playful now uses the Rose Pink color preset (previously Royal Purple) for a warmer, on-mockup palette.

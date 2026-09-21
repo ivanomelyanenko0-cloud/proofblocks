@@ -98,10 +98,10 @@ function prfbl_render_counter( $attributes, $content ) {
 
 	do_action( 'proofblocks_after_render_block', 'proofblocks/counter', $attributes );
 
-	if ( ! $extra ) {
-		return $content;
+	// Insert extra markup (e.g. Pro's odometer digit wrapper) just before the closing tag.
+	if ( $extra ) {
+		$content = preg_replace( '/<\/div>\s*$/', $extra . '</div>', $content, 1 );
 	}
 
-	// Insert extra markup (e.g. Pro's odometer digit wrapper) just before the closing tag.
-	return preg_replace( '/<\/div>\s*$/', $extra . '</div>', $content, 1 );
+	return wp_kses( $content, prfbl_block_body_allowed_html() );
 }
