@@ -3,7 +3,7 @@ Contributors: lukystile
 Tags: pricing table, cta banner, countdown timer, animated counter, blocks
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -55,6 +55,13 @@ The block content stays in your page as standard HTML - it doesn't disappear, th
 3. A Counter block animating into view.
 
 == Changelog ==
+
+= 1.0.2 =
+* New "Position" control for the Counter block (Left/Center/Right) - it was previously always left-aligned with no way to change that.
+* Fixed the Counter block shipping with no CSS at all (editor or frontend) - its build entry point never imported its own stylesheet, so an unstyled Counter (most visible with Pro's "ring" style, which stretched to an enormous unconstrained square) fell back to browser defaults instead of the block's real layout.
+* Refreshed the Minimal, Bold, Corporate, and Playful design presets to match new reference mockups: Minimal now uses Rounded corners with a Bordered card (previously Sharp/Flat); Corporate now uses the Serif font; Playful now uses the Rose Pink color preset (previously Royal Purple) for a warmer, on-mockup palette.
+* Design presets now also set the Banner's image layout and the Counter's icon position, so one click matches the reference composition (image-left/beside-number for Minimal and Corporate, image-top/above-number for Bold and Playful) instead of leaving those two controls untouched.
+* Applying the Playful preset to a Pricing Table now switches every "Popular" column to the Ribbon highlight style (matching its mockup's corner ribbon); the other three presets keep the Border glow badge.
 
 = 1.0.1 =
 * Renumbered ahead of the first public release - nothing above 1.0.0 was ever published, so this replaces what was internally 1.1.0 through 1.3.1 with a single real-world version.

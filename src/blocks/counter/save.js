@@ -25,6 +25,7 @@ export default function save( { attributes } ) {
 		animation,
 		font,
 		textStyle,
+		position,
 	} = attributes;
 
 	const className = [
@@ -35,6 +36,7 @@ export default function save( { attributes } ) {
 		'none' !== animation ? `proofblocks-anim-${ animation }` : null,
 		font ? `proofblocks-font-${ font }` : null,
 		'normal' !== textStyle ? `proofblocks-textstyle-${ textStyle }` : null,
+		'left' !== position ? `proofblocks-align-${ position }` : null,
 	].filter( Boolean ).join( ' ' );
 
 	const blockProps = useBlockProps.save( {

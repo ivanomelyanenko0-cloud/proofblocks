@@ -163,6 +163,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		animation,
 		font,
 		textStyle,
+		position,
 	} = attributes;
 
 	const className = [
@@ -172,6 +173,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		'none' !== animation ? `proofblocks-anim-${ animation }` : null,
 		font ? `proofblocks-font-${ font }` : null,
 		'normal' !== textStyle ? `proofblocks-textstyle-${ textStyle }` : null,
+		'left' !== position ? `proofblocks-align-${ position }` : null,
 	].filter( Boolean ).join( ' ' );
 
 	const blockProps = useBlockProps( { className } );
@@ -179,6 +181,20 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
+				<PanelBody title={ __( 'Layout', 'proofblocks' ) }>
+					<p>{ __( 'Position', 'proofblocks' ) }</p>
+					<ButtonGroup>
+						<Button variant={ 'left' === position ? 'primary' : 'secondary' } onClick={ () => setAttributes( { position: 'left' } ) }>
+							{ __( 'Left', 'proofblocks' ) }
+						</Button>
+						<Button variant={ 'center' === position ? 'primary' : 'secondary' } onClick={ () => setAttributes( { position: 'center' } ) }>
+							{ __( 'Center', 'proofblocks' ) }
+						</Button>
+						<Button variant={ 'right' === position ? 'primary' : 'secondary' } onClick={ () => setAttributes( { position: 'right' } ) }>
+							{ __( 'Right', 'proofblocks' ) }
+						</Button>
+					</ButtonGroup>
+				</PanelBody>
 				<PanelBody title={ __( 'Mode', 'proofblocks' ) }>
 					<ButtonGroup>
 						<Button variant={ 'number' === mode ? 'primary' : 'secondary' } onClick={ () => setAttributes( { mode: 'number' } ) }>
@@ -236,7 +252,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				<PanelBody title={ __( 'Style', 'proofblocks' ) }>
 					<p>{ __( 'Design preset', 'proofblocks' ) }</p>
 					<DesignPresetPicker
-						fields={ [ 'token', 'cardStyle', 'animation', 'font', 'textStyle' ] }
+						fields={ [ 'token', 'cardStyle', 'animation', 'font', 'textStyle', 'iconPosition' ] }
 						onApply={ ( picked ) => setAttributes( picked ) }
 					/>
 					<TokenSwatches value={ token } onChange={ ( value ) => setAttributes( { token: value } ) } allowNone />

@@ -29,9 +29,11 @@ function prfbl_render_counter( $attributes, $content ) {
 
 	$icon          = isset( $attributes['icon'] ) ? sanitize_key( $attributes['icon'] ) : '';
 	$icon_position = prfbl_validate_enum( isset( $attributes['iconPosition'] ) ? $attributes['iconPosition'] : 'stacked', array( 'stacked', 'inline' ), 'stacked' );
+	$position      = prfbl_validate_enum( isset( $attributes['position'] ) ? $attributes['position'] : 'left', array( 'left', 'center', 'right' ), 'left' );
 
-	// 'flat'/'stacked'/'none' are this block's pre-existing defaults and stay
-	// class-less, matching save.js - see src/shared/_design-tokens.scss header.
+	// 'flat'/'stacked'/'none'/'left' are this block's pre-existing defaults
+	// and stay class-less, matching save.js - see
+	// src/shared/_design-tokens.scss header.
 	$classes = array( 'wp-block-proofblocks-counter', 'proofblocks-counter--' . $style );
 	if ( $token ) {
 		$classes[] = 'proofblocks-token-' . $token;
@@ -50,6 +52,9 @@ function prfbl_render_counter( $attributes, $content ) {
 	}
 	if ( 'normal' !== $text_style ) {
 		$classes[] = 'proofblocks-textstyle-' . $text_style;
+	}
+	if ( 'left' !== $position ) {
+		$classes[] = 'proofblocks-align-' . $position;
 	}
 
 	// Replace save.js's own class list with the fully resolved set (token

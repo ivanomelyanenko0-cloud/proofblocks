@@ -70,7 +70,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				<PanelBody title={ __( 'Style', 'proofblocks' ) }>
 					<p>{ __( 'Design preset', 'proofblocks' ) }</p>
 					<DesignPresetPicker
-						fields={ [ 'token', 'shape', 'animation', 'font', 'textStyle', 'textAlign' ] }
+						fields={ [ 'token', 'shape', 'animation', 'font', 'textStyle', 'textAlign', 'layout' ] }
 						onApply={ ( values ) => setAttributes( values ) }
 					/>
 					<TokenSwatches value={ token } onChange={ ( value ) => setAttributes( { token: value } ) } />

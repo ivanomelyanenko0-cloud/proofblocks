@@ -7,7 +7,7 @@ import {
 	useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import {
 	TokenSwatches,
 	ShapeControl,
@@ -47,6 +47,17 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		[ clientId ]
 	) < applyFilters( 'proofblocks.pricingTable.maxColumns', 3 );
 
+	// popularStyle lives on each pricing-column child, not on this block, so
+	// a design preset can't reach it through the generic fields/setAttributes
+	// path other controls use - DesignPresetPicker instead hands the full
+	// preset object to onApply below, which updates every popular column
+	// directly (e.g. Playful's ribbon vs the other three's border glow).
+	const columnBlocks = useSelect(
+		( select ) => select( 'core/block-editor' ).getBlocks( clientId ),
+		[ clientId ]
+	);
+	const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
 		template: TEMPLATE,
@@ -68,7 +79,16 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 					<p>{ __( 'Design preset', 'proofblocks' ) }</p>
 					<DesignPresetPicker
 						fields={ [ 'token', 'shape', 'cardStyle', 'animation', 'font', 'textStyle' ] }
-						onApply={ ( values ) => setAttributes( values ) }
+						onApply={ ( values, preset ) => {
+							setAttributes( values );
+							if ( preset.popularStyle ) {
+								columnBlocks.forEach( ( block ) => {
+									if ( block.attributes.isPopular ) {
+										updateBlockAttributes( block.clientId, { popularStyle: preset.popularStyle } );
+									}
+								} );
+							}
+						} }
 					/>
 					<TokenSwatches value={ token } onChange={ ( value ) => setAttributes( { token: value } ) } />
 					<p>{ __( 'Corners', 'proofblocks' ) }</p>

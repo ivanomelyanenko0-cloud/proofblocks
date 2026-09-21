@@ -33,6 +33,44 @@
 			flex-basis: 100%;
 		}
 	}
+
+	// 'left' (the default) needs no rule - inline-flex already shrink-wraps
+	// and sits at the start of its own line, which reads as "left" for a
+	// block with no other inline content beside it. Center/right switch to a
+	// block-level flex box (auto margins on inline-flex don't center it -
+	// only block-level boxes honor them) while width:fit-content keeps it
+	// shrink-wrapped instead of stretching to the full content column.
+	//
+	// !important on the margins isn't optional here: WP core's constrained-
+	// layout style (block themes' default content-width centering) matches
+	// any direct child of .is-layout-constrained that isn't literally
+	// .alignleft/.alignright/.alignfull with `margin-left/right: auto
+	// !important`, which only starts fighting us once this becomes
+	// block-level - it has no effect on the inline-flex 'left' state above.
+	// A plain (non-!important) declaration here loses to that regardless of
+	// selector specificity, forcing BOTH sides back to auto and silently
+	// re-centering an intended right-alignment.
+	//
+	// The class is also repeated in the selector (3 class-selectors' worth
+	// of specificity, not 2): the frontend's `.is-layout-constrained >
+	// :where(...)` rule carries zero specificity from :where() and loses to
+	// a plain 2-class selector here, but the editor canvas additionally
+	// carries its own `.block-editor-block-list__layout.is-root-container >
+	// :where(...)` version, which is ALSO !important and ties us at 2
+	// classes' worth of specificity - a tie that source order then decides,
+	// unreliably. Repeating the class avoids depending on load order.
+	&.proofblocks-align-center.proofblocks-align-center {
+		display: flex;
+		margin-inline: auto !important;
+		width: fit-content;
+	}
+
+	&.proofblocks-align-right.proofblocks-align-right {
+		display: flex;
+		margin-inline-start: auto !important;
+		margin-inline-end: 0 !important;
+		width: fit-content;
+	}
 }
 
 @include anim.pb-animation-classes(".wp-block-proofblocks-counter");
