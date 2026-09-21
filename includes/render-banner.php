@@ -54,6 +54,14 @@ function prfbl_render_banner( $attributes, $content ) {
 		$classes[] = 'proofblocks-textstyle-' . $text_style;
 	}
 
+	// Hand-built wrapper (not get_block_wrapper_attributes()), so the
+	// supports.align class has to be added here or Wide/Full set in the
+	// editor is silently ignored on the frontend.
+	$align = prfbl_validate_enum( isset( $attributes['align'] ) ? $attributes['align'] : '', array( 'wide', 'full' ), '' );
+	if ( $align ) {
+		$classes[] = 'align' . $align;
+	}
+
 	$wrapper_attributes = array(
 		'class' => implode( ' ', $classes ),
 	);

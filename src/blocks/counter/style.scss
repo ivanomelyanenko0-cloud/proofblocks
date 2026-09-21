@@ -95,6 +95,9 @@
 	font-variant-numeric: tabular-nums;
 	font-weight: 700;
 	line-height: 1.1;
+	// Core gives Columns overflow-wrap:break-word, which otherwise splits a
+	// long number mid-digit ("1240" / "0+") when the column is narrow.
+	white-space: nowrap;
 }
 
 .proofblocks-counter__label {

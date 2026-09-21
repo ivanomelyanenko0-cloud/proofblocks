@@ -5,6 +5,7 @@
 	align-items: center;
 	background: var(--pb-color-bg, #fff);
 	border-radius: min(var(--pb-radius, 8px), 48px);
+	box-sizing: border-box;
 	color: var(--pb-color-text, #0f172a);
 	display: flex;
 	gap: 2rem;
