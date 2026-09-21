@@ -31,8 +31,8 @@ function prfbl_render_counter( $attributes, $content ) {
 	$icon_position = prfbl_validate_enum( isset( $attributes['iconPosition'] ) ? $attributes['iconPosition'] : 'stacked', array( 'stacked', 'inline' ), 'stacked' );
 	$position      = prfbl_validate_enum( isset( $attributes['position'] ) ? $attributes['position'] : 'left', array( 'left', 'center', 'right' ), 'left' );
 
-	// 'flat'/'stacked'/'none'/'left' are this block's pre-existing defaults
-	// and stay class-less, matching save.js - see
+	// 'flat'/'stacked'/'none' are this block's pre-existing defaults and
+	// stay class-less, matching save.js - see
 	// src/shared/_design-tokens.scss header.
 	$classes = array( 'wp-block-proofblocks-counter', 'proofblocks-counter--' . $style );
 	if ( $token ) {
@@ -53,9 +53,12 @@ function prfbl_render_counter( $attributes, $content ) {
 	if ( 'normal' !== $text_style ) {
 		$classes[] = 'proofblocks-textstyle-' . $text_style;
 	}
-	if ( 'left' !== $position ) {
-		$classes[] = 'proofblocks-align-' . $position;
-	}
+	// Always emitted, including the default 'left' (unlike the class-less
+	// defaults above): left needs its own rule to line up with the content
+	// column. save.js deliberately still omits it - changing what save()
+	// serializes would invalidate every already-saved Counter - and this
+	// render callback replaces the class list wholesale anyway.
+	$classes[] = 'proofblocks-align-' . $position;
 
 	// Replace save.js's own class list with the fully resolved set (token
 	// may differ due to Pro's site-wide sync override), leaving the rest of

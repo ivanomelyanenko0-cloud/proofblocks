@@ -173,7 +173,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		'none' !== animation ? `proofblocks-anim-${ animation }` : null,
 		font ? `proofblocks-font-${ font }` : null,
 		'normal' !== textStyle ? `proofblocks-textstyle-${ textStyle }` : null,
-		'left' !== position ? `proofblocks-align-${ position }` : null,
+		`proofblocks-align-${ position }`,
 	].filter( Boolean ).join( ' ' );
 
 	const blockProps = useBlockProps( { className } );

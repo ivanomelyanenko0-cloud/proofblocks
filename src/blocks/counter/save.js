@@ -36,6 +36,7 @@ export default function save( { attributes } ) {
 		'none' !== animation ? `proofblocks-anim-${ animation }` : null,
 		font ? `proofblocks-font-${ font }` : null,
 		'normal' !== textStyle ? `proofblocks-textstyle-${ textStyle }` : null,
+		// 'left' stays omitted: adding it would change the serialized markup of every already-saved Counter. render_callback adds it.
 		'left' !== position ? `proofblocks-align-${ position }` : null,
 	].filter( Boolean ).join( ' ' );
 

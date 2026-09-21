@@ -57,7 +57,7 @@ The block content stays in your page as standard HTML - it doesn't disappear, th
 == Changelog ==
 
 = 1.0.2 =
-* New "Position" control for the Counter block (Left/Center/Right) - it was previously always left-aligned with no way to change that.
+* New "Position" control for the Counter block (Left/Center/Right), measured from the edges of your theme's content column so it lines up with the text and blocks around it. Previously the Counter sat at the far left of the full page width with no way to change that.
 * Fixed the Counter block shipping with no CSS at all (editor or frontend) - its build entry point never imported its own stylesheet, so an unstyled Counter (most visible with Pro's "ring" style, which stretched to an enormous unconstrained square) fell back to browser defaults instead of the block's real layout.
 * Refreshed the Minimal, Bold, Corporate, and Playful design presets to match new reference mockups: Minimal now uses Rounded corners with a Bordered card (previously Sharp/Flat); Corporate now uses the Serif font; Playful now uses the Rose Pink color preset (previously Royal Purple) for a warmer, on-mockup palette.
 * Design presets now also set the Banner's image layout and the Counter's icon position, so one click matches the reference composition (image-left/beside-number for Minimal and Corporate, image-top/above-number for Bold and Playful) instead of leaving those two controls untouched.
