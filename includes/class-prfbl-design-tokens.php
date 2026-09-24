@@ -1,8 +1,7 @@
 <?php
 /**
  * Shared design-token (color palette/gradient) presets consumed by all
- * three blocks. The one spec-mandated class in this otherwise-procedural
- * codebase (TZ §4 explicitly calls for a shared PHP class here).
+ * three blocks. The one class in this otherwise-procedural codebase.
  *
  * Static methods, not a singleton instance: the only state that needs to
  * persist across a request is "which custom token slugs have already had
