@@ -1,6 +1,6 @@
 === ProofBlocks ===
 Contributors: lukystile
-Tags: pricing table, cta banner, countdown timer, animated counter, blocks
+Tags: pricing table, call to action, countdown timer, animated counter, blocks
 Requires at least: 6.5
 Tested up to: 7.1
 Stable tag: 1.0.2
@@ -8,59 +8,99 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Pricing tables, banners/CTAs, and animated counters for the Block Editor - no separate page builder required.
+Pricing tables, CTA banners and animated counters as native blocks. No page builder, and assets load only on pages that use them.
 
 == Description ==
 
-**ProofBlocks** adds a focused set of conversion-oriented blocks to the WordPress Block Editor:
+Pricing plans, a promo banner, a "10,000+ happy customers" counter: these are the sections that turn visitors into buyers. Usually that means installing a heavy page builder or a 40-block bundle you'll never use.
 
-**[Try the live demo](https://founder.cognitolab.net/proofblocks-demo/index.html)** — a real WordPress site with a Pricing Table, Banner, and Counter already published, no install needed.
+**ProofBlocks gives you exactly those three blocks, done properly, inside the editor you already use.**
 
-* **Pricing Table** — build a pricing table with plan columns, feature lists, and a CTA button per plan. Columns are native blocks, so you have full control over each one.
-* **Banner / CTA** — an image + heading + text + button banner for promotions, announcements, or lead-ins, with left/right image layouts.
-* **Counter / Countdown** — an animated number counter (counts up when scrolled into view) or a countdown to a date, with a message shown when it expires.
+**[Try the live demo](https://founder.cognitolab.net/proofblocks-demo/index.html)**: a real WordPress site with a Pricing Table, Banner and Counter already published. No install needed.
 
-Each block ships with its own style presets and works in both the Post Editor and the Site Editor (Full Site Editing themes). Assets are only loaded on pages where a block is actually used.
+= The blocks =
 
-Need more plan columns, premium gradients and an animated "popular" badge, a monthly/yearly price toggle, video/parallax banners, extra banner layouts, or odometer-style counter animations? Those are available in **[ProofBlocks Pro](https://cognitolab.net/products/proofblocks)** — a separate, optional add-on. Everything listed above is fully functional in the free version with no restrictions.
+**Pricing Table**
+Plan columns with a name, price and billing period, a feature list, and a CTA button per plan (with an optional new-tab link). Each column is its own native block, so you can reorder, duplicate or restyle plans individually. You can highlight your best plan with a custom badge and a border glow, ribbon or scale effect.
+
+**Banner / CTA**
+Image, heading, text and button, for promotions, announcements, lead magnets or product launches. You can put the image on the left, right or top, and align the text left or centre.
+
+**Counter / Countdown**
+Two blocks in one:
+
+* **Counter**: a number that counts up when it scrolls into view, with a prefix and suffix (`$`, `+`, `%`), adjustable speed, a label and an optional icon. Good for social proof such as customers served, projects shipped or years in business.
+* **Countdown**: a live countdown to any date, with your own message once it expires. Good for sales, launches and early-bird deadlines.
+
+= Looks good in one click =
+
+* **4 design presets** (Minimal, Bold, Corporate, Playful) that set a matching style in one click. Everything stays editable afterwards.
+* **8 colour presets** shared across all three blocks, so your pricing table, banner and counters always match.
+* **Card shapes and styles**: sharp, rounded or pill corners, with flat, bordered or shadow cards.
+* **Typography**: use your theme's font or pick sans-serif, serif, monospace or bold condensed, plus normal, bold, uppercase or italic text styles.
+* **Entrance animations**: fade in or slide up as the block scrolls into view.
+
+= Built light =
+
+* **No page builder.** These are real Block Editor blocks that work in the Post Editor and the Site Editor (block themes).
+* **Assets load only where they're used.** A page without a ProofBlocks block loads none of its CSS or JS.
+* **No external services and no tracking.** Nothing leaves your site.
+* **Your content is safe.** Block content is stored as standard post content. If you ever deactivate the plugin, the text stays in your pages.
+* **Developer-friendly.** A documented set of filters and actions lets you add colour sets, banner layouts, counter icons and custom markup.
+
+= Want more? =
+
+If you need more plan columns, premium gradients with an animated "popular" badge, a monthly/yearly price toggle, video or parallax banners, extra banner layouts or odometer-style counters, those are available in **[ProofBlocks Pro](https://cognitolab.net/products/proofblocks)**, a separate optional add-on.
+
+== Source code ==
+
+The editor and front-end scripts in the `build/` folder are compiled from the human-readable source in the plugin's public repository:
+https://github.com/ivanomelyanenko0-cloud/proofblocks
+
+To build it yourself, run `npm install` and then `npm run build` (uses `@wordpress/scripts`).
 
 == External services ==
 
 This plugin does not connect to any external service. No data leaves your site. All block content is stored in your own WordPress database as standard post content, like any other block.
 
-== Source code ==
-
-The JavaScript and CSS in the `build/` folder are compiled from the human-readable sources in the plugin's `src/` folder (also shipped inside this plugin, together with `package.json`), using [@wordpress/scripts](https://www.npmjs.com/package/@wordpress/scripts) (webpack). The full development repository is public: https://github.com/ivanomelyanenko0-cloud/proofblocks
-
-To rebuild the compiled files: run `npm install`, then `npm run build` in the plugin folder.
-
 == Installation ==
 
-1. Upload the `proofblocks` folder to `/wp-content/plugins/`, or install it directly from the WordPress plugin directory.
+1. Install ProofBlocks from **Plugins → Add New**, or upload the `proofblocks` folder to `/wp-content/plugins/`.
 2. Activate the plugin through the **Plugins** screen.
-3. Open any post/page in the Block Editor (or the Site Editor) and search for "Pricing Table", "Banner", or "Counter" in the block inserter.
+3. Open any post or page in the Block Editor (or the Site Editor) and search for "Pricing Table", "Banner" or "Counter" in the block inserter.
+4. Pick a design preset in the block's Style panel and start editing.
 
 == Frequently Asked Questions ==
 
-= Does this work with the Site Editor / block themes? =
+= Is the free version limited? =
 
-Yes, all three blocks work in both the classic Post Editor and the Site Editor.
+No. All three blocks and every feature listed in the description work without restrictions. ProofBlocks Pro is an optional add-on for extra layouts and effects.
+
+= Does this work with the Site Editor and block themes? =
+
+Yes. All three blocks work in both the Post Editor and the Site Editor.
 
 = Does this plugin slow down my site? =
 
-No. Each block's CSS/JS is only loaded on pages where that block is actually present, using the Block Editor's built-in asset-loading mechanism.
+No. Each block's CSS and JS is loaded only on pages where that block is actually present, using the Block Editor's built-in asset loading.
 
-= What happens to my pricing tables/banners/counters if I deactivate the plugin? =
+= Can I make the blocks match my brand? =
 
-The block content stays in your page as standard HTML - it doesn't disappear, though it will lose its styling until the plugin is reactivated. This is standard Gutenberg behavior.
+Yes. Start from one of the 8 colour presets and 4 design presets, then adjust shape, card style, font and text style per block. Developers can register their own colour sets through a filter.
+
+= What happens to my content if I deactivate the plugin? =
+
+The block content stays in your pages as standard HTML and doesn't disappear. It loses its styling until the plugin is reactivated, which is standard Block Editor behaviour.
+
+= Does uninstalling delete anything? =
+
+By default, nothing. If you want the plugin's settings removed when you delete it, turn that on under **Settings → ProofBlocks**. Block content in your pages is never removed either way.
 
 == Screenshots ==
 
-1. Pricing Table with the Corporate design preset.
-2. Pricing Table with the Playful design preset, with the popular plan marked by a corner ribbon.
-3. Banner / CTA block with the Bold design preset and the image on top.
-4. Counter blocks with icons, side by side in a Columns layout.
-5. The Style panel in the Block Editor: one-click design presets, color swatches, corners, card style, animation, font, and text style.
+1. Building a Pricing Table in the Block Editor: plan columns, feature lists and a highlighted "popular" plan.
+2. A Banner / CTA block on the front end.
+3. A Counter block animating into view.
 
 == Changelog ==
 
@@ -75,15 +115,14 @@ The block content stays in your page as standard HTML - it doesn't disappear, th
 * Applying the Playful preset to a Pricing Table now switches every "Popular" column to the Ribbon highlight style (matching its mockup's corner ribbon); the other three presets keep the Border glow badge.
 
 = 1.0.1 =
-* Renumbered ahead of the first public release - nothing above 1.0.0 was ever published, so this replaces what was internally 1.1.0 through 1.3.1 with a single real-world version.
-* 8 ready-made color presets shared across all three blocks.
-* Card shape control (Sharp/Rounded/Pill) for Pricing Table and Banner, and card style control (Flat/Bordered/Shadow) for Pricing Table and Counter.
-* "Popular plan" highlight style (border glow, ribbon, or scale) for Pricing Table columns.
-* "Image top" Banner layout, alongside image-left/image-right, plus a left/center text alignment control.
-* Color tokens, an 8-icon picker, and an icon position control (above or beside the number) for Counter.
-* Entrance animation (fade in / slide up on scroll into view) for all three blocks.
-* Font choice (Default/theme, Sans-serif, Serif, Monospace, Bold condensed) and text style presets (Normal, Bold, Uppercase, Italic) for all three blocks.
-* "Design preset" one-click buttons (Minimal, Bold, Corporate, Playful) in the Style panel of all three blocks - each fills in a matching combination of the above in one click. Every control stays fully editable afterward.
+* First public release.
+* Blocks: Pricing Table (with Pricing Column), Banner / CTA, Counter / Countdown.
+* 8 shared colour presets and 4 one-click design presets (Minimal, Bold, Corporate, Playful).
+* Card shape (Sharp/Rounded/Pill) and card style (Flat/Bordered/Shadow) controls.
+* "Popular plan" highlight: border glow, ribbon or scale, with custom badge text.
+* Banner layouts (image left, right or top) with left/centre text alignment.
+* Counter: 8-icon picker, icon position, prefix/suffix, adjustable duration; Countdown with custom expiry message.
+* Entrance animations, font choice and text style presets for all three blocks.
 
 = 1.0.0 =
 * Initial release.
