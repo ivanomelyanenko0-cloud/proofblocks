@@ -52,17 +52,42 @@ function renderStaticNumber( el ) {
 	}
 }
 
-function initCountdown( el ) {
-	var dateAttr = el.getAttribute( 'data-pb-date' );
+/**
+ * (Re)start the countdown toward `dateAttr`. Safe to call again with a new
+ * date: the previous timer is cancelled first. An empty/invalid date stops
+ * the timer; for a WooCommerce countdown that means "no running sale" and
+ * the block's fallback applies.
+ *
+ * Fires `proofblocks:countdown` on the block (detail.target: ms timestamp,
+ * or null when there's nothing to count down to) every time the target is
+ * set, so ProofBlocks Pro can react to the real end date - including one
+ * that changed after the live check below.
+ */
+function startCountdown( el, dateAttr ) {
 	var expiredText = el.getAttribute( 'data-pb-expired-text' ) || '';
 	var valueEl = el.querySelector( '.proofblocks-counter__value' );
+	var isWoo = 'wc_sale' === el.getAttribute( 'data-pb-source' );
 
-	if ( ! valueEl || ! dateAttr ) {
+	window.clearTimeout( el.pbCountdownTimer );
+
+	if ( ! valueEl ) {
 		return;
 	}
 
-	var target = new Date( dateAttr ).getTime();
-	if ( isNaN( target ) ) {
+	var target = dateAttr ? new Date( dateAttr ).getTime() : NaN;
+	var hasTarget = ! isNaN( target );
+
+	if ( isWoo ) {
+		var hide = ! hasTarget && 'hide' === el.getAttribute( 'data-pb-fallback' );
+		el.classList.toggle( 'proofblocks-counter--no-sale', hide );
+		if ( ! hasTarget ) {
+			valueEl.textContent = expiredText;
+		}
+	}
+
+	el.dispatchEvent( new window.CustomEvent( 'proofblocks:countdown', { bubbles: true, detail: { target: hasTarget ? target : null } } ) );
+
+	if ( ! hasTarget ) {
 		return;
 	}
 
@@ -78,8 +103,43 @@ function initCountdown( el ) {
 		var minutes = Math.floor( ( totalSeconds % 3600 ) / 60 );
 		var seconds = totalSeconds % 60;
 		valueEl.textContent = ( days > 0 ? days + 'd ' : '' ) + pad2( hours ) + ':' + pad2( minutes ) + ':' + pad2( seconds );
-		window.setTimeout( tick, 1000 );
+		el.pbCountdownTimer = window.setTimeout( tick, 1000 );
 	} )();
+}
+
+/**
+ * A WooCommerce countdown's date comes baked into the HTML, which a page
+ * cache can serve long after the sale was extended, shortened or ended.
+ * Re-read the live sale end once per page load and restart if it differs.
+ * A failed request leaves the baked-in date in place.
+ */
+function refreshSaleEnd( el ) {
+	var url = el.getAttribute( 'data-pb-sale-url' );
+	if ( ! url || ! window.fetch ) {
+		return;
+	}
+
+	window.fetch( url, { credentials: 'omit' } )
+		.then( function ( response ) {
+			return response.ok ? response.json() : Promise.reject();
+		} )
+		.then( function ( data ) {
+			var live = data && data.saleEnd ? data.saleEnd : '';
+			var baked = el.getAttribute( 'data-pb-date' ) || '';
+			var same = ( ! live && ! baked ) || ( live && baked && new Date( live ).getTime() === new Date( baked ).getTime() );
+			if ( ! same ) {
+				el.setAttribute( 'data-pb-date', live );
+				startCountdown( el, live );
+			}
+		} )
+		.catch( function () {} );
+}
+
+function initCountdown( el ) {
+	startCountdown( el, el.getAttribute( 'data-pb-date' ) );
+	if ( 'wc_sale' === el.getAttribute( 'data-pb-source' ) ) {
+		refreshSaleEnd( el );
+	}
 }
 
 function initCounters() {

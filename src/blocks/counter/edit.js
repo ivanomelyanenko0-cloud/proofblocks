@@ -5,6 +5,7 @@ import { PanelBody, Button, ButtonGroup, TextControl, RangeControl, SelectContro
 import { FREE_TOKEN_PRESETS } from '../../shared/design-tokens';
 import { COUNTER_ICONS } from '../../shared/icons';
 import { DesignPresetPicker } from '../../shared/design-presets';
+import WooSourceControls from './woo-source';
 
 function TokenSwatches( { value, onChange, allowNone = false } ) {
 	return (
@@ -155,6 +156,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		numberDuration,
 		countdownDate,
 		countdownExpiredText,
+		countdownSource,
 		label,
 		icon,
 		iconPosition,
@@ -235,12 +237,28 @@ export default function Edit( { attributes, setAttributes } ) {
 					</PanelBody>
 				) : (
 					<PanelBody title={ __( 'Countdown settings', 'proofblocks' ) }>
-						<TextControl
-							label={ __( 'Target date/time', 'proofblocks' ) }
-							type="datetime-local"
-							value={ countdownDate }
-							onChange={ ( value ) => setAttributes( { countdownDate: value } ) }
-						/>
+						{ /* Offered only with WooCommerce active - but kept visible on a block already set to it, so it can be switched back. */ }
+						{ ( ( window.proofblocksWoo && window.proofblocksWoo.active ) || 'wc_sale' === countdownSource ) && (
+							<SelectControl
+								label={ __( 'Count down to', 'proofblocks' ) }
+								value={ countdownSource }
+								options={ [
+									{ value: 'manual', label: __( 'A date I choose', 'proofblocks' ) },
+									{ value: 'wc_sale', label: __( 'When a WooCommerce sale ends', 'proofblocks' ) },
+								] }
+								onChange={ ( value ) => setAttributes( { countdownSource: value } ) }
+							/>
+						) }
+						{ 'wc_sale' === countdownSource ? (
+							<WooSourceControls attributes={ attributes } setAttributes={ setAttributes } />
+						) : (
+							<TextControl
+								label={ __( 'Target date/time', 'proofblocks' ) }
+								type="datetime-local"
+								value={ countdownDate }
+								onChange={ ( value ) => setAttributes( { countdownDate: value } ) }
+							/>
+						) }
 						<TextControl
 							label={ __( 'Expired text', 'proofblocks' ) }
 							value={ countdownExpiredText }

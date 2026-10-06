@@ -3,7 +3,7 @@ Contributors: lukystile
 Tags: pricing table, call to action, countdown timer, animated counter, blocks
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -31,6 +31,7 @@ Two blocks in one:
 
 * **Counter**: a number that counts up when it scrolls into view, with a prefix and suffix (`$`, `+`, `%`), adjustable speed, a label and an optional icon. Good for social proof such as customers served, projects shipped or years in business.
 * **Countdown**: a live countdown to any date, with your own message once it expires. Good for sales, launches and early-bird deadlines.
+* **WooCommerce sale countdown** (optional): count down to when a product's sale really ends, read straight from the product (or one of its variations) instead of a date you type in. When the sale ends or changes, the countdown follows, even on cached pages. When there's no running sale, the block hides itself or shows your expired text. It never invents a deadline.
 
 = Looks good in one click =
 
@@ -72,6 +73,14 @@ This plugin does not connect to any external service. No data leaves your site. 
 
 == Frequently Asked Questions ==
 
+= Do I need WooCommerce? =
+
+No. WooCommerce is only needed for the optional "When a WooCommerce sale ends" countdown. Without it, every block works as usual and that option simply isn't offered.
+
+= Will the sale countdown be wrong on a cached page? =
+
+No. The page loads with the sale end date it was cached with, and the countdown then checks your site for the current date and corrects itself if the sale was extended, shortened, started or ended since.
+
 = Is the free version limited? =
 
 No. All three blocks and every feature listed in the description work without restrictions. ProofBlocks Pro is an optional add-on for extra layouts and effects.
@@ -103,6 +112,13 @@ By default, nothing. If you want the plugin's settings removed when you delete i
 3. A Counter block animating into view.
 
 == Changelog ==
+
+= 1.1.0 =
+* Countdown can now count down to when a WooCommerce sale ends, taken from the product's own sale schedule. Pick a product (or leave it empty to use the product the block is on), and optionally a single variation. For a variable product, the default is whichever variation's sale ends first.
+* When there's no running sale with an end date (not on sale, no end date, sale not started yet, or WooCommerce inactive), the block hides itself or shows its expired text, your choice. It never falls back to a made-up date.
+* The sale end date is re-checked live on page load, so the countdown stays correct on cached pages.
+* Declares compatibility with WooCommerce's High-Performance Order Storage and Cart/Checkout blocks (ProofBlocks doesn't touch orders or checkout).
+* For developers: new `proofblocks_counter_wrapper_attributes` filter and a `proofblocks:countdown` event fired whenever a countdown's target date is set.
 
 = 1.0.2 =
 * Fixed the Wide/Full alignment set on a Pricing Table or Banner in the editor being ignored on the frontend - both blocks now keep their `alignwide`/`alignfull` class.

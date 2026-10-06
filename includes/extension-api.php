@@ -47,6 +47,8 @@ function prfbl_get_extension_points() {
 			'proofblocks_banner_container_attributes'      => 'filter',
 			// (string $html, array $attrs) => string   Counter extra markup; also where Pro enqueues its odometer script.
 			'proofblocks_counter_render_extra'             => 'filter',
+			// (array $atts, array $attrs) => array   extra data-* attributes on the Counter wrapper.
+			'proofblocks_counter_wrapper_attributes'       => 'filter',
 			// (array $icons) => array   extended icon library for the Counter
 			// picker; each entry is slug => array('label' => ..., 'path' => ...
 			// SVG path data), rendered server-side by

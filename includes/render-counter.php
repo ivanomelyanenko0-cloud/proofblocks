@@ -8,11 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * @param array  $attributes Block attributes.
- * @param string $content    Static content from save.js.
+ * @param array         $attributes Block attributes.
+ * @param string        $content    Static content from save.js.
+ * @param WP_Block|null $block      Block instance (for postId context).
  * @return string
  */
-function prfbl_render_counter( $attributes, $content ) {
+function prfbl_render_counter( $attributes, $content, $block = null ) {
 	do_action( 'proofblocks_before_render_block', 'proofblocks/counter', $attributes );
 
 	$style = isset( $attributes['style'] ) ? sanitize_key( $attributes['style'] ) : 'basic';
@@ -60,6 +61,40 @@ function prfbl_render_counter( $attributes, $content ) {
 	// render callback replaces the class list wholesale anyway.
 	$classes[] = 'proofblocks-align-' . $position;
 
+	// Extra data-* attributes for the wrapper. Each key replaces any
+	// same-named attribute save.js wrote, so a WooCommerce countdown never
+	// ticks toward a stale manual date left over from before the source
+	// was switched.
+	$wrapper_atts = array();
+
+	$mode = isset( $attributes['mode'] ) ? $attributes['mode'] : 'number';
+	if ( 'countdown' === $mode && isset( $attributes['countdownSource'] ) && 'wc_sale' === $attributes['countdownSource'] ) {
+		$product_id   = isset( $attributes['productId'] ) ? absint( $attributes['productId'] ) : 0;
+		$variation_id = $product_id && isset( $attributes['variationId'] ) ? absint( $attributes['variationId'] ) : 0;
+		$product_id   = $product_id ? $product_id : prfbl_wc_current_product_id( $block );
+		$end          = $product_id ? prfbl_wc_get_sale_end( $product_id, $variation_id ) : null;
+		$fallback     = prfbl_validate_enum( isset( $attributes['wcFallback'] ) ? $attributes['wcFallback'] : 'hide', array( 'hide', 'expired-text' ), 'hide' );
+
+		$wrapper_atts['data-pb-date']     = null === $end ? '' : gmdate( 'c', $end );
+		$wrapper_atts['data-pb-source']   = 'wc_sale';
+		$wrapper_atts['data-pb-fallback'] = $fallback;
+		if ( $product_id && prfbl_wc_active() ) {
+			$wrapper_atts['data-pb-sale-url'] = add_query_arg( 'variation', $variation_id, rest_url( 'proofblocks/v1/wc-product/' . $product_id ) );
+		}
+
+		// Hidden until view.js confirms a sale - and stays hidden without
+		// JS - rather than showing an empty or zeroed-out timer.
+		if ( null === $end && 'hide' === $fallback ) {
+			$classes[] = 'proofblocks-counter--no-sale';
+		}
+	}
+
+	/**
+	 * Lets Pro attach its own data-* attributes to the wrapper (e.g. the
+	 * urgency window). Only data-* keys are kept.
+	 */
+	$wrapper_atts = apply_filters( 'proofblocks_counter_wrapper_attributes', $wrapper_atts, $attributes );
+
 	// Replace save.js's own class list with the fully resolved set (token
 	// may differ due to Pro's site-wide sync override), leaving the rest of
 	// the wrapper's attributes (data-pb-*) untouched. Leading \s* matters:
@@ -73,6 +108,10 @@ function prfbl_render_counter( $attributes, $content ) {
 		$content,
 		1
 	);
+
+	if ( $wrapper_atts ) {
+		$content = prfbl_counter_set_wrapper_attributes( $content, $wrapper_atts );
+	}
 
 	// The icon glyph is rendered here, not baked into save.js's static
 	// output, so that icons contributed by Pro via the proofblocks_counter_icons
@@ -104,4 +143,29 @@ function prfbl_render_counter( $attributes, $content ) {
 	}
 
 	return wp_kses( $content, prfbl_block_body_allowed_html() );
+}
+
+/**
+ * Set data-* attributes on the Counter's outer <div>, replacing any that
+ * save.js already wrote under the same name.
+ *
+ * @param string $content Rendered markup, starting with the wrapper <div.
+ * @param array  $atts    name => value; non-data-* names are ignored.
+ * @return string
+ */
+function prfbl_counter_set_wrapper_attributes( $content, $atts ) {
+	if ( ! preg_match( '/^<div\b[^>]*>/', $content, $match ) ) {
+		return $content;
+	}
+
+	$tag = $match[0];
+	foreach ( $atts as $name => $value ) {
+		if ( ! preg_match( '/^data-[a-z0-9-]+$/', $name ) ) {
+			continue;
+		}
+		$tag = preg_replace( '/\s' . preg_quote( $name, '/' ) . '="[^"]*"/', '', $tag );
+		$tag = substr( $tag, 0, -1 ) . ' ' . $name . '="' . esc_attr( $value ) . '">';
+	}
+
+	return $tag . substr( $content, strlen( $match[0] ) );
 }

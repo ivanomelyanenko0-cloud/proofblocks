@@ -105,3 +105,11 @@
 	margin-top: .25em;
 	opacity: .75;
 }
+
+// WooCommerce countdown with no running sale and the "hide" fallback.
+// view.js removes the class if the live check finds a sale after all.
+// !important: the position rules above set display:flex with a doubled,
+// higher-specificity selector.
+.wp-block-proofblocks-counter.proofblocks-counter--no-sale {
+	display: none !important;
+}

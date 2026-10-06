@@ -41,6 +41,30 @@
       "type": "string",
       "default": ""
     },
+    "countdownSource": {
+      "type": "string",
+      "default": "manual"
+    },
+    "productId": {
+      "type": "number",
+      "default": 0
+    },
+    "variationId": {
+      "type": "number",
+      "default": 0
+    },
+    "wcFallback": {
+      "type": "string",
+      "default": "hide"
+    },
+    "urgencyShowHours": {
+      "type": "number",
+      "default": 0
+    },
+    "urgencyHighlightHours": {
+      "type": "number",
+      "default": 0
+    },
     "label": {
       "type": "string",
       "default": ""
@@ -82,6 +106,10 @@
       "default": "left"
     }
   },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
   "supports": {
     "html": false
   },
