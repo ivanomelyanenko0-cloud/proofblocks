@@ -3,7 +3,7 @@ Contributors: lukystile
 Tags: pricing table, call to action, countdown timer, animated counter, blocks
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -32,6 +32,7 @@ Two blocks in one:
 * **Counter**: a number that counts up when it scrolls into view, with a prefix and suffix (`$`, `+`, `%`), adjustable speed, a label and an optional icon. Good for social proof such as customers served, projects shipped or years in business.
 * **Countdown**: a live countdown to any date, with your own message once it expires. Good for sales, launches and early-bird deadlines.
 * **WooCommerce sale countdown** (optional): count down to when a product's sale really ends, read straight from the product (or one of its variations) instead of a date you type in. When the sale ends or changes, the countdown follows, even on cached pages. When there's no running sale, the block hides itself or shows your expired text. It never invents a deadline.
+* **WooCommerce stock counter** (optional): show how many of a product (or one variation, or all variations together) are really left, e.g. "Only 7 left". It follows your stock, even on cached pages. When stock isn't tracked or the product sells out, the block hides itself or shows your own text, such as "Sold out". It never invents a number.
 
 = Looks good in one click =
 
@@ -75,11 +76,15 @@ This plugin does not connect to any external service. No data leaves your site. 
 
 = Do I need WooCommerce? =
 
-No. WooCommerce is only needed for the optional "When a WooCommerce sale ends" countdown. Without it, every block works as usual and that option simply isn't offered.
+No. WooCommerce is only needed for the optional sale countdown and stock counter. Without it, every block works as usual and those options simply aren't offered.
 
-= Will the sale countdown be wrong on a cached page? =
+= Will the sale countdown or stock counter be wrong on a cached page? =
 
-No. The page loads with the sale end date it was cached with, and the countdown then checks your site for the current date and corrects itself if the sale was extended, shortened, started or ended since.
+No. The page loads with the sale end date and stock it was cached with, and the block then checks your site for the current values and corrects itself if the sale or stock changed since.
+
+= My store hides stock amounts. Will the stock counter show them? =
+
+No. If WooCommerce → Settings → Products → Inventory → "Stock display format" is set to never show the amount, ProofBlocks respects that: the stock counter shows its fallback instead, and the block editor tells you why.
 
 = Is the free version limited? =
 
@@ -107,11 +112,20 @@ By default, nothing. If you want the plugin's settings removed when you delete i
 
 == Screenshots ==
 
-1. Building a Pricing Table in the Block Editor: plan columns, feature lists and a highlighted "popular" plan.
-2. A Banner / CTA block on the front end.
-3. A Counter block animating into view.
+1. A Pricing Table on the front end: three plans with a highlighted "Popular" column.
+2. The same Pricing Table with the Playful preset: pill buttons, shadowed cards and a corner ribbon.
+3. A Banner / CTA block with an image, headline and button.
+4. Counter blocks showing key numbers, each with an icon and label.
+5. Building a Pricing Table in the Block Editor: design presets, colors, corners, card style and entrance animation in the sidebar.
 
 == Changelog ==
+
+= 1.1.1 =
+* Counter can now show how many of a WooCommerce product are really left in stock. Pick a product (or leave it empty to use the product the block is on), and optionally a single variation. For a variable product, the default is all variations added together.
+* When there's no stock count (stock not tracked, sold out, a variation without stock tracking, or WooCommerce inactive), the block hides itself or shows a text of your choice, e.g. "Sold out". It never falls back to a made-up number.
+* The stock is re-checked live on page load, so the counter stays correct on cached pages. It's shown as is, without the count-up animation.
+* Respects WooCommerce's "never show stock amounts" setting.
+* For developers: the `proofblocks/v1/wc-product/{id}` endpoint now also returns `stock`, and a `proofblocks:stock` event fires whenever a stock counter's value is set.
 
 = 1.1.0 =
 * Countdown can now count down to when a WooCommerce sale ends, taken from the product's own sale schedule. Pick a product (or leave it empty to use the product the block is on), and optionally a single variation. For a variable product, the default is whichever variation's sale ends first.

@@ -33,6 +33,10 @@
       "type": "number",
       "default": 2000
     },
+    "numberSource": {
+      "type": "string",
+      "default": "manual"
+    },
     "countdownDate": {
       "type": "string",
       "default": ""
@@ -57,11 +61,23 @@
       "type": "string",
       "default": "hide"
     },
+    "wcEmptyText": {
+      "type": "string",
+      "default": ""
+    },
     "urgencyShowHours": {
       "type": "number",
       "default": 0
     },
     "urgencyHighlightHours": {
+      "type": "number",
+      "default": 0
+    },
+    "stockShowBelow": {
+      "type": "number",
+      "default": 0
+    },
+    "stockHighlightBelow": {
       "type": "number",
       "default": 0
     },

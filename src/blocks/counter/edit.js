@@ -5,7 +5,7 @@ import { PanelBody, Button, ButtonGroup, TextControl, RangeControl, SelectContro
 import { FREE_TOKEN_PRESETS } from '../../shared/design-tokens';
 import { COUNTER_ICONS } from '../../shared/icons';
 import { DesignPresetPicker } from '../../shared/design-presets';
-import WooSourceControls from './woo-source';
+import WooSourceControls, { useLiveProduct } from './woo-source';
 
 function TokenSwatches( { value, onChange, allowNone = false } ) {
 	return (
@@ -157,6 +157,9 @@ export default function Edit( { attributes, setAttributes } ) {
 		countdownDate,
 		countdownExpiredText,
 		countdownSource,
+		numberSource,
+		productId,
+		variationId,
 		label,
 		icon,
 		iconPosition,
@@ -179,6 +182,19 @@ export default function Edit( { attributes, setAttributes } ) {
 	].filter( Boolean ).join( ' ' );
 
 	const blockProps = useBlockProps( { className } );
+
+	const wooActive = !! ( window.proofblocksWoo && window.proofblocksWoo.active );
+	const isWooNumber = 'number' === mode && 'wc_stock' === numberSource;
+	const isWooCountdown = 'countdown' === mode && 'wc_sale' === countdownSource;
+	// One request feeds both the sidebar status and the canvas preview.
+	const live = useLiveProduct( isWooNumber || isWooCountdown ? productId : 0, variationId );
+
+	let previewValue = __( '00:00:00:00', 'proofblocks' );
+	if ( isWooNumber ) {
+		previewValue = live.stock ? `${ numberPrefix }${ live.stock }${ numberSuffix }` : `${ numberPrefix }#${ numberSuffix }`;
+	} else if ( 'number' === mode ) {
+		previewValue = `${ numberPrefix }${ numberValue }${ numberSuffix }`;
+	}
 
 	return (
 		<>
@@ -210,12 +226,28 @@ export default function Edit( { attributes, setAttributes } ) {
 
 				{ 'number' === mode ? (
 					<PanelBody title={ __( 'Number settings', 'proofblocks' ) }>
-						<TextControl
-							label={ __( 'Value', 'proofblocks' ) }
-							type="number"
-							value={ numberValue }
-							onChange={ ( value ) => setAttributes( { numberValue: Number( value ) || 0 } ) }
-						/>
+						{ /* Same rule as the countdown source below: offered with WooCommerce active, kept visible on a block already set to it. */ }
+						{ ( wooActive || isWooNumber ) && (
+							<SelectControl
+								label={ __( 'Number to show', 'proofblocks' ) }
+								value={ numberSource }
+								options={ [
+									{ value: 'manual', label: __( 'A number I enter', 'proofblocks' ) },
+									{ value: 'wc_stock', label: __( 'How many are left in stock (WooCommerce)', 'proofblocks' ) },
+								] }
+								onChange={ ( value ) => setAttributes( { numberSource: value } ) }
+							/>
+						) }
+						{ isWooNumber ? (
+							<WooSourceControls attributes={ attributes } setAttributes={ setAttributes } kind="stock" live={ live } />
+						) : (
+							<TextControl
+								label={ __( 'Value', 'proofblocks' ) }
+								type="number"
+								value={ numberValue }
+								onChange={ ( value ) => setAttributes( { numberValue: Number( value ) || 0 } ) }
+							/>
+						) }
 						<TextControl
 							label={ __( 'Prefix', 'proofblocks' ) }
 							value={ numberPrefix }
@@ -226,19 +258,22 @@ export default function Edit( { attributes, setAttributes } ) {
 							value={ numberSuffix }
 							onChange={ ( value ) => setAttributes( { numberSuffix: value } ) }
 						/>
-						<RangeControl
-							label={ __( 'Animation duration (ms)', 'proofblocks' ) }
-							min={ 500 }
-							max={ 6000 }
-							step={ 100 }
-							value={ numberDuration }
-							onChange={ ( value ) => setAttributes( { numberDuration: value } ) }
-						/>
+						{ /* Stock is shown as is, never counted up - see render-counter.php. */ }
+						{ ! isWooNumber && (
+							<RangeControl
+								label={ __( 'Animation duration (ms)', 'proofblocks' ) }
+								min={ 500 }
+								max={ 6000 }
+								step={ 100 }
+								value={ numberDuration }
+								onChange={ ( value ) => setAttributes( { numberDuration: value } ) }
+							/>
+						) }
 					</PanelBody>
 				) : (
 					<PanelBody title={ __( 'Countdown settings', 'proofblocks' ) }>
 						{ /* Offered only with WooCommerce active - but kept visible on a block already set to it, so it can be switched back. */ }
-						{ ( ( window.proofblocksWoo && window.proofblocksWoo.active ) || 'wc_sale' === countdownSource ) && (
+						{ ( wooActive || 'wc_sale' === countdownSource ) && (
 							<SelectControl
 								label={ __( 'Count down to', 'proofblocks' ) }
 								value={ countdownSource }
@@ -250,7 +285,7 @@ export default function Edit( { attributes, setAttributes } ) {
 							/>
 						) }
 						{ 'wc_sale' === countdownSource ? (
-							<WooSourceControls attributes={ attributes } setAttributes={ setAttributes } />
+							<WooSourceControls attributes={ attributes } setAttributes={ setAttributes } kind="sale" live={ live } />
 						) : (
 							<TextControl
 								label={ __( 'Target date/time', 'proofblocks' ) }
@@ -309,7 +344,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			<div { ...blockProps }>
 				{ icon && <IconGlyph slug={ icon } /> }
 				<span className="proofblocks-counter__value">
-					{ 'number' === mode ? `${ numberPrefix }${ numberValue }${ numberSuffix }` : __( '00:00:00:00', 'proofblocks' ) }
+					{ previewValue }
 				</span>
 				<RichText
 					tagName="span"

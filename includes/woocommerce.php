@@ -1,12 +1,14 @@
 <?php
 /**
- * Optional WooCommerce data source for the Counter block's countdown:
- * "count down to when this product's sale really ends", read from the
- * product itself instead of a date typed into the block.
+ * Optional WooCommerce data sources for the Counter block: a countdown to
+ * when this product's sale really ends, and a number showing how many are
+ * really left in stock - both read from the product itself instead of
+ * typed into the block.
  *
  * WooCommerce is never required. Every entry point here checks for it, and
- * without it a Counter set to this source simply falls back (hidden, or its
- * expired text) - it never falls back to a made-up date.
+ * without it a Counter set to one of these sources simply falls back
+ * (hidden, or its fallback text) - it never falls back to a made-up date
+ * or number.
  *
  * Read-only: nothing here writes to WooCommerce or stores state of its own.
  */
@@ -89,6 +91,82 @@ function prfbl_wc_single_sale_end( $product ) {
 }
 
 /**
+ * Whether the store shows stock amounts at all. With WooCommerce's "Stock
+ * display format" set to never show the amount, the store owner has
+ * decided stock levels are private, so ProofBlocks doesn't reveal them
+ * either - not on the page, not through its REST endpoint.
+ *
+ * @return bool
+ */
+function prfbl_wc_stock_amounts_public() {
+	return 'no_amount' !== get_option( 'woocommerce_stock_format', '' );
+}
+
+/**
+ * How many of a product (or one of its variations) are left.
+ *
+ * - $variation_id > 0: that variation only (it must belong to $product_id).
+ *   A variation whose stock is managed on the parent reports the parent's.
+ * - Variable product, $variation_id 0: the parent's stock when it's
+ *   managed on the parent, otherwise the total across visible variations -
+ *   but only if every one of them tracks stock; one untracked variation
+ *   makes the total unknowable.
+ * - Anything else: the product's own stock.
+ *
+ * No stock tracking, nothing left, or amounts hidden by the store yields
+ * null: there's no honest number to show.
+ *
+ * @param int $product_id
+ * @param int $variation_id
+ * @return int|null
+ */
+function prfbl_wc_get_stock( $product_id, $variation_id = 0 ) {
+	if ( ! prfbl_wc_active() || ! $product_id || ! prfbl_wc_stock_amounts_public() ) {
+		return null;
+	}
+
+	$product = wc_get_product( $product_id );
+	if ( ! $product || 'publish' !== $product->get_status() ) {
+		return null;
+	}
+
+	if ( $variation_id ) {
+		$variation = wc_get_product( $variation_id );
+		if ( ! $variation || 'publish' !== $variation->get_status() || (int) $variation->get_parent_id() !== (int) $product->get_id() ) {
+			return null;
+		}
+		return prfbl_wc_single_stock( $variation );
+	}
+
+	if ( $product->is_type( 'variable' ) && ! $product->managing_stock() ) {
+		$total = 0;
+		foreach ( $product->get_visible_children() as $child_id ) {
+			$child = wc_get_product( $child_id );
+			if ( ! $child || ! $child->managing_stock() ) {
+				return null;
+			}
+			$total += max( 0, (int) $child->get_stock_quantity() );
+		}
+		return $total > 0 ? $total : null;
+	}
+
+	return prfbl_wc_single_stock( $product );
+}
+
+/**
+ * @param WC_Product|false|null $product
+ * @return int|null
+ */
+function prfbl_wc_single_stock( $product ) {
+	if ( ! $product || ! $product->managing_stock() ) {
+		return null;
+	}
+
+	$quantity = $product->get_stock_quantity();
+	return ( null !== $quantity && $quantity > 0 ) ? (int) $quantity : null;
+}
+
+/**
  * The product a Counter with productId 0 ("current product") belongs to:
  * the post in block context (product templates, Query Loop), else the
  * single product page being viewed.
@@ -109,10 +187,11 @@ function prfbl_wc_current_product_id( $block = null ) {
 }
 
 /**
- * Public, read-only sale-end lookup the Counter's view script calls on page
- * load, so a page served from a full-page cache still shows the product's
- * current sale end instead of whatever was true when the page was cached.
- * Exposes only what the product page itself already shows publicly.
+ * Public, read-only sale-end and stock lookup the Counter's view script
+ * calls on page load, so a page served from a full-page cache still shows
+ * the product's current sale end and stock instead of whatever was true
+ * when the page was cached. Exposes only what the store already shows
+ * publicly (stock only when the store displays stock amounts).
  */
 function prfbl_wc_register_rest_route() {
 	if ( ! prfbl_wc_active() ) {
@@ -146,9 +225,10 @@ function prfbl_wc_register_rest_route() {
 				$response = new WP_REST_Response(
 					array(
 						'saleEnd' => null === $end ? null : gmdate( 'c', $end ),
+						'stock'   => prfbl_wc_get_stock( $product_id, (int) $request['variation'] ),
 					)
 				);
-				// Short enough that a changed sale shows up within a minute,
+				// Short enough that a changed sale or stock shows up within a minute,
 				// long enough that a busy page doesn't hit PHP on every view.
 				$response->header( 'Cache-Control', 'public, max-age=60' );
 
@@ -160,12 +240,17 @@ function prfbl_wc_register_rest_route() {
 add_action( 'rest_api_init', 'prfbl_wc_register_rest_route' );
 
 /**
- * Tells the Counter editor whether to offer the WooCommerce source at all.
+ * Tells the Counter editor whether to offer the WooCommerce sources at all,
+ * and whether the store hides stock amounts.
  */
 function prfbl_wc_editor_data() {
+	$data = array(
+		'active'      => prfbl_wc_active(),
+		'stockHidden' => prfbl_wc_active() && ! prfbl_wc_stock_amounts_public(),
+	);
 	wp_add_inline_script(
 		prfbl_get_block_editor_script_handle( 'proofblocks/counter' ),
-		'window.proofblocksWoo = ' . wp_json_encode( array( 'active' => prfbl_wc_active() ) ) . ';',
+		'window.proofblocksWoo = ' . wp_json_encode( $data ) . ';',
 		'before'
 	);
 }

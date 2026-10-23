@@ -135,6 +135,56 @@ function refreshSaleEnd( el ) {
 		.catch( function () {} );
 }
 
+/**
+ * Show a WooCommerce stock level (null/0 = nothing to show: the block's
+ * fallback applies). Fires `proofblocks:stock` on the block (detail.stock:
+ * number, or null) every time, so ProofBlocks Pro can react to the real
+ * stock - including stock that changed after the live check below.
+ */
+function showStock( el, stock ) {
+	var valueEl = el.querySelector( '.proofblocks-counter__value' );
+	var hasStock = stock > 0;
+
+	el.setAttribute( 'data-pb-value', hasStock ? stock : '' );
+	el.classList.toggle( 'proofblocks-counter--no-sale', ! hasStock && 'hide' === el.getAttribute( 'data-pb-fallback' ) );
+	if ( valueEl ) {
+		valueEl.textContent = hasStock
+			? ( el.getAttribute( 'data-pb-prefix' ) || '' ) + stock + ( el.getAttribute( 'data-pb-suffix' ) || '' )
+			: el.getAttribute( 'data-pb-empty-text' ) || '';
+	}
+
+	el.dispatchEvent( new window.CustomEvent( 'proofblocks:stock', { bubbles: true, detail: { stock: hasStock ? stock : null } } ) );
+}
+
+/**
+ * Same idea as refreshSaleEnd(): the stock baked into a cached page can be
+ * out of date, so re-read it once per page load.
+ */
+function refreshStock( el ) {
+	var url = el.getAttribute( 'data-pb-stock-url' );
+	if ( ! url || ! window.fetch ) {
+		return;
+	}
+
+	window.fetch( url, { credentials: 'omit' } )
+		.then( function ( response ) {
+			return response.ok ? response.json() : Promise.reject();
+		} )
+		.then( function ( data ) {
+			var live = data && data.stock > 0 ? data.stock : null;
+			var baked = parseInt( el.getAttribute( 'data-pb-value' ), 10 ) || null;
+			if ( live !== baked ) {
+				showStock( el, live );
+			}
+		} )
+		.catch( function () {} );
+}
+
+function initStock( el ) {
+	showStock( el, parseInt( el.getAttribute( 'data-pb-value' ), 10 ) || null );
+	refreshStock( el );
+}
+
 function initCountdown( el ) {
 	startCountdown( el, el.getAttribute( 'data-pb-date' ) );
 	if ( 'wc_sale' === el.getAttribute( 'data-pb-source' ) ) {
@@ -172,6 +222,11 @@ function initCounters() {
 		}
 
 		if ( 'number' !== mode ) {
+			return;
+		}
+
+		if ( 'wc_stock' === el.getAttribute( 'data-pb-source' ) ) {
+			initStock( el );
 			return;
 		}
 

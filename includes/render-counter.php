@@ -89,6 +89,39 @@ function prfbl_render_counter( $attributes, $content, $block = null ) {
 		}
 	}
 
+	// Live stock is printed as is, without the count-up: a stock level
+	// isn't an achievement to animate, and counting up from zero would show
+	// "0 left" first. The real number is in the HTML for visitors without
+	// JS; view.js re-checks it, since a page cache can serve this markup
+	// long after the stock changed.
+	$value_text = null;
+	if ( 'number' === $mode && isset( $attributes['numberSource'] ) && 'wc_stock' === $attributes['numberSource'] ) {
+		$product_id   = isset( $attributes['productId'] ) ? absint( $attributes['productId'] ) : 0;
+		$variation_id = $product_id && isset( $attributes['variationId'] ) ? absint( $attributes['variationId'] ) : 0;
+		$product_id   = $product_id ? $product_id : prfbl_wc_current_product_id( $block );
+		$stock        = $product_id ? prfbl_wc_get_stock( $product_id, $variation_id ) : null;
+		$fallback     = prfbl_validate_enum( isset( $attributes['wcFallback'] ) ? $attributes['wcFallback'] : 'hide', array( 'hide', 'expired-text' ), 'hide' );
+		$empty_text   = isset( $attributes['wcEmptyText'] ) ? (string) $attributes['wcEmptyText'] : '';
+		$prefix       = isset( $attributes['numberPrefix'] ) ? (string) $attributes['numberPrefix'] : '';
+		$suffix       = isset( $attributes['numberSuffix'] ) ? (string) $attributes['numberSuffix'] : '';
+
+		$wrapper_atts['data-pb-value']      = null === $stock ? '' : (string) $stock;
+		$wrapper_atts['data-pb-source']     = 'wc_stock';
+		$wrapper_atts['data-pb-fallback']   = $fallback;
+		$wrapper_atts['data-pb-empty-text'] = $empty_text;
+		if ( $product_id && prfbl_wc_active() ) {
+			$wrapper_atts['data-pb-stock-url'] = add_query_arg( 'variation', $variation_id, rest_url( 'proofblocks/v1/wc-product/' . $product_id ) );
+		}
+
+		$value_text = null === $stock ? $empty_text : $prefix . $stock . $suffix;
+
+		// Same hiding class as a countdown without a sale: "no live
+		// WooCommerce data to show".
+		if ( null === $stock && 'hide' === $fallback ) {
+			$classes[] = 'proofblocks-counter--no-sale';
+		}
+	}
+
 	/**
 	 * Lets Pro attach its own data-* attributes to the wrapper (e.g. the
 	 * urgency window). Only data-* keys are kept.
@@ -111,6 +144,15 @@ function prfbl_render_counter( $attributes, $content, $block = null ) {
 
 	if ( $wrapper_atts ) {
 		$content = prfbl_counter_set_wrapper_attributes( $content, $wrapper_atts );
+	}
+
+	if ( null !== $value_text ) {
+		$content = preg_replace(
+			'/(<span class="proofblocks-counter__value">)[^<]*(<\/span>)/',
+			'${1}' . str_replace( array( '\\', '$' ), array( '\\\\', '\\$' ), esc_html( $value_text ) ) . '${2}',
+			$content,
+			1
+		);
 	}
 
 	// The icon glyph is rendered here, not baked into save.js's static

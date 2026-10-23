@@ -12,3 +12,4 @@ phpunit.xml.dist
 tests
 Gruntfile.js
 webpack.config.js
+INTELLIDESC_INTEGRATION.md
