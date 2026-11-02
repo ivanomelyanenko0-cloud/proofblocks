@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       ProofBlocks
+ * Plugin Name:       ProofBlocks – Pricing Table, Call to Action & Counter Blocks
  * Plugin URI:        https://cognitolab.net/products/proofblocks
  * Description:       Pricing tables, banners/CTAs, and counters for the Block Editor.
  * Version:           1.1.1

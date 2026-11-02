@@ -1,6 +1,6 @@
-=== ProofBlocks ===
+=== ProofBlocks – Pricing Table, Call to Action & Counter Blocks ===
 Contributors: lukystile
-Tags: pricing table, call to action, countdown timer, animated counter, blocks
+Tags: pricing table, call to action, countdown timer, animated counter, gutenberg blocks
 Requires at least: 6.5
 Tested up to: 7.1
 Stable tag: 1.1.1
@@ -8,7 +8,7 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Pricing tables, CTA banners and animated counters as native blocks. No page builder, and assets load only on pages that use them.
+Pricing table, call to action banner, animated counter and countdown timer blocks for Gutenberg. No page builder; assets load only where used.
 
 == Description ==
 
@@ -16,21 +16,23 @@ Pricing plans, a promo banner, a "10,000+ happy customers" counter: these are th
 
 **ProofBlocks gives you exactly those three blocks, done properly, inside the editor you already use.**
 
+**ProofBlocks** adds a pricing table block, a call to action (CTA) banner block and an animated counter block with a countdown timer to the WordPress block editor (Gutenberg). Build pricing plans, promo banners and social-proof numbers in the Post Editor or the Site Editor with no page builder, and keep your pages fast: each block's CSS and JS load only on the pages that use it.
+
 **[Try the live demo](https://founder.cognitolab.net/proofblocks-demo/index.html)**: a real WordPress site with a Pricing Table, Banner and Counter already published. No install needed.
 
-= The blocks =
+= Pricing table, CTA and counter blocks =
 
 **Pricing Table**
-Plan columns with a name, price and billing period, a feature list, and a CTA button per plan (with an optional new-tab link). Each column is its own native block, so you can reorder, duplicate or restyle plans individually. You can highlight your best plan with a custom badge and a border glow, ribbon or scale effect.
+A responsive pricing table: plan columns with a name, price and billing period, a feature list, and a CTA button per plan (with an optional new-tab link). Each column is its own native block, so you can reorder, duplicate or restyle plans individually. You can highlight your best plan with a custom badge and a border glow, ribbon or scale effect.
 
 **Banner / CTA**
-Image, heading, text and button, for promotions, announcements, lead magnets or product launches. You can put the image on the left, right or top, and align the text left or centre.
+A call to action banner with an image, heading, text and button, for promotions, announcements, lead magnets or product launches. You can put the image on the left, right or top, and align the text left or centre.
 
 **Counter / Countdown**
 Two blocks in one:
 
 * **Counter**: a number that counts up when it scrolls into view, with a prefix and suffix (`$`, `+`, `%`), adjustable speed, a label and an optional icon. Good for social proof such as customers served, projects shipped or years in business.
-* **Countdown**: a live countdown to any date, with your own message once it expires. Good for sales, launches and early-bird deadlines.
+* **Countdown**: a live countdown timer to any date, with your own message once it expires. Good for sales, launches and early-bird deadlines.
 * **WooCommerce sale countdown** (optional): count down to when a product's sale really ends, read straight from the product (or one of its variations) instead of a date you type in. When the sale ends or changes, the countdown follows, even on cached pages. When there's no running sale, the block hides itself or shows your expired text. It never invents a deadline.
 * **WooCommerce stock counter** (optional): show how many of a product (or one variation, or all variations together) are really left, e.g. "Only 7 left". It follows your stock, even on cached pages. When stock isn't tracked or the product sells out, the block hides itself or shows your own text, such as "Sold out". It never invents a number.
 
@@ -73,6 +75,14 @@ This plugin does not connect to any external service. No data leaves your site. 
 4. Pick a design preset in the block's Style panel and start editing.
 
 == Frequently Asked Questions ==
+
+= How do I add a pricing table in WordPress without a page builder? =
+
+Install ProofBlocks, open a post or page in the block editor, add the **Pricing Table** block and pick a design preset. Each plan is its own column block, so you can add, reorder or duplicate plans and mark one as "Popular".
+
+= Is there a countdown timer block? =
+
+Yes. The Counter / Countdown block can count down to any date, or, with WooCommerce, to the real end of a product's sale. It can also work as an animated number counter that counts up when it scrolls into view.
 
 = Do I need WooCommerce? =
 
