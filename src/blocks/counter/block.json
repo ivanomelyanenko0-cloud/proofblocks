@@ -81,6 +81,14 @@
       "type": "number",
       "default": 0
     },
+    "ratingStars": {
+      "type": "boolean",
+      "default": true
+    },
+    "liveShowAtLeast": {
+      "type": "number",
+      "default": 0
+    },
     "label": {
       "type": "string",
       "default": ""

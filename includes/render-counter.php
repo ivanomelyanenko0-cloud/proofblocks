@@ -122,6 +122,45 @@ function prfbl_render_counter( $attributes, $content, $block = null ) {
 		}
 	}
 
+	// Units sold, review count and average rating: same pattern as stock
+	// (real number in the HTML, re-checked by view.js), except that sold and
+	// review counts do count up, since they are achievements, and the
+	// rating keeps its decimal.
+	$stars_html = '';
+	if ( 'number' === $mode && isset( $attributes['numberSource'] ) && in_array( $attributes['numberSource'], array( 'wc_sold', 'wc_reviews', 'wc_rating' ), true ) ) {
+		$source     = $attributes['numberSource'];
+		$product_id = isset( $attributes['productId'] ) ? absint( $attributes['productId'] ) : 0;
+		$product_id = $product_id ? $product_id : prfbl_wc_current_product_id( $block );
+		$live       = $product_id ? prfbl_wc_get_live_number( $source, $product_id ) : null;
+		$fallback   = prfbl_validate_enum( isset( $attributes['wcFallback'] ) ? $attributes['wcFallback'] : 'hide', array( 'hide', 'expired-text' ), 'hide' );
+		$empty_text = isset( $attributes['wcEmptyText'] ) ? (string) $attributes['wcEmptyText'] : '';
+		$prefix     = isset( $attributes['numberPrefix'] ) ? (string) $attributes['numberPrefix'] : '';
+		$suffix     = isset( $attributes['numberSuffix'] ) ? (string) $attributes['numberSuffix'] : '';
+
+		$wrapper_atts['data-pb-value']      = null === $live ? '' : (string) $live['value'];
+		$wrapper_atts['data-pb-source']     = $source;
+		$wrapper_atts['data-pb-fallback']   = $fallback;
+		$wrapper_atts['data-pb-empty-text'] = $empty_text;
+		if ( $product_id && prfbl_wc_active() ) {
+			$query = array( 'variation' => 0 );
+			if ( 'wc_sold' === $source ) {
+				$query['sig'] = prfbl_wc_sold_signature( $product_id );
+			}
+			$wrapper_atts['data-pb-live-url'] = add_query_arg( $query, rest_url( 'proofblocks/v1/wc-product/' . $product_id ) );
+		}
+
+		$value_text = null === $live ? $empty_text : $prefix . $live['text'] . $suffix;
+
+		if ( 'wc_rating' === $source && ! empty( $attributes['ratingStars'] ) ) {
+			$percent    = null === $live ? 0 : min( 100, max( 0, round( $live['value'] / 5 * 100, 1 ) ) );
+			$stars_html = '<span class="proofblocks-counter__stars" aria-hidden="true"><span class="proofblocks-counter__stars-fill" style="width:' . esc_attr( $percent ) . '%"></span></span>';
+		}
+
+		if ( null === $live && 'hide' === $fallback ) {
+			$classes[] = 'proofblocks-counter--no-sale';
+		}
+	}
+
 	/**
 	 * Lets Pro attach its own data-* attributes to the wrapper (e.g. the
 	 * urgency window). Only data-* keys are kept.
@@ -153,6 +192,10 @@ function prfbl_render_counter( $attributes, $content, $block = null ) {
 			$content,
 			1
 		);
+	}
+
+	if ( $stars_html ) {
+		$content = preg_replace( '/(<span class="proofblocks-counter__value">[^<]*<\/span>)/', '${1}' . $stars_html, $content, 1 );
 	}
 
 	// The icon glyph is rendered here, not baked into save.js's static

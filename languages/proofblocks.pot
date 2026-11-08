@@ -2,12 +2,782 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: ProofBlocks 1.0.0\n"
+"Project-Id-Version: ProofBlocks – Pricing Table, Call to Action & Counter Blocks 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/proofblocks\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-12T00:00:00+00:00\n"
+"POT-Creation-Date: 2026-11-08T00:52:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.x (placeholder - regenerate with `wp i18n make-pot .` before release)\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: proofblocks\n"
+
+#. Plugin Name of the plugin
+msgid "ProofBlocks – Pricing Table, Call to Action & Counter Blocks"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://cognitolab.net/products/proofblocks"
+msgstr ""
+
+#. Description of the plugin
+msgid "Pricing tables, banners/CTAs, and counters for the Block Editor."
+msgstr ""
+
+#. Author of the plugin
+msgid "CognitoLab"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://cognitolab.net"
+msgstr ""
+
+#: includes/block-category.php:16
+#: includes/settings.php:28
+msgid "ProofBlocks"
+msgstr ""
+
+#: includes/class-prfbl-design-tokens.php:41
+msgid "Classic Blue"
+msgstr ""
+
+#: includes/class-prfbl-design-tokens.php:49
+msgid "Warm Sunset"
+msgstr ""
+
+#: includes/class-prfbl-design-tokens.php:57
+msgid "Mono Dark"
+msgstr ""
+
+#: includes/class-prfbl-design-tokens.php:65
+msgid "Fresh Mint"
+msgstr ""
+
+#: includes/class-prfbl-design-tokens.php:73
+msgid "Royal Purple"
+msgstr ""
+
+#: includes/class-prfbl-design-tokens.php:81
+msgid "Rose Pink"
+msgstr ""
+
+#: includes/class-prfbl-design-tokens.php:89
+msgid "Slate Gray"
+msgstr ""
+
+#: includes/class-prfbl-design-tokens.php:97
+msgid "Amber Gold"
+msgstr ""
+
+#: includes/icon-library.php:22
+msgid "Clock"
+msgstr ""
+
+#: includes/icon-library.php:26
+msgid "Check"
+msgstr ""
+
+#: includes/icon-library.php:30
+msgid "Rocket"
+msgstr ""
+
+#: includes/icon-library.php:34
+msgid "Target"
+msgstr ""
+
+#: includes/icon-library.php:38
+msgid "Shield"
+msgstr ""
+
+#: includes/icon-library.php:42
+msgid "Gift"
+msgstr ""
+
+#: includes/icon-library.php:46
+msgid "Bolt"
+msgstr ""
+
+#: includes/icon-library.php:50
+msgid "Flag"
+msgstr ""
+
+#: includes/settings.php:27
+#: includes/settings.php:42
+msgid "ProofBlocks Settings"
+msgstr ""
+
+#: includes/settings.php:47
+msgid "Uninstall"
+msgstr ""
+
+#: includes/settings.php:51
+msgid "Remove ProofBlocks options when the plugin is deleted"
+msgstr ""
+
+#: includes/settings.php:53
+msgid "Unchecked by default. Block content in your pages is never removed by uninstall - it stays as standard content either way."
+msgstr ""
+
+#: includes/woocommerce.php:347
+msgid "Product not found."
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Default (no color)"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/pricing-table/index.js:1
+msgid "Sharp"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/pricing-table/index.js:1
+msgid "Rounded"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/pricing-table/index.js:1
+msgid "Pill"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Flat"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Bordered"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Shadow"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "None"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Fade in"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Slide up"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Default (matches your theme)"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Sans-serif"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Serif"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Monospace"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Bold condensed (display)"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Font"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Normal"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Bold"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Uppercase, spaced out"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Italic"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Text style"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:1
+#: build/blocks/pricing-table/index.js:1
+msgid "Minimal"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:1
+#: build/blocks/pricing-table/index.js:1
+msgid "Corporate"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:1
+#: build/blocks/pricing-table/index.js:1
+msgid "Playful"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:1
+#: build/blocks/pricing-table/index.js:1
+msgid "One-click starting point: fills in the color, style, font, and animation controls below. You can still change any of them afterward."
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+msgid "Layout"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+msgid "Image left"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+msgid "Image right"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+msgid "Image top"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+msgid "Text alignment"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+msgid "Left"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+msgid "Center"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Style"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Design preset"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/pricing-table/index.js:1
+msgid "Corners"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Entrance animation"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Call to Action"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Link URL"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Open in new tab"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+msgid "Choose image"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+msgid "Banner heading"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+msgid "Banner text…"
+msgstr ""
+
+#: build/blocks/banner/index.js:1
+msgid "Call to action"
+msgstr ""
+
+#. translators: %d: variation ID.
+#: build/blocks/counter/index.js:1
+msgid "Variation #%d"
+msgstr ""
+
+#: build/blocks/counter/index.js:1
+msgid "Checking the sale…"
+msgstr ""
+
+#: build/blocks/counter/index.js:1
+msgid "Checking the stock…"
+msgstr ""
+
+#: build/blocks/counter/index.js:1
+msgid "Checking the product…"
+msgstr ""
+
+#. translators: %d: number of units sold.
+#: build/blocks/counter/index.js:2
+msgid "Sold so far: %d (paid orders, as WooCommerce counts them)."
+msgstr ""
+
+#: build/blocks/counter/index.js:2
+msgid "Nothing sold yet, so there is no number to show. Visitors get the fallback below."
+msgstr ""
+
+#. translators: %d: number of reviews.
+#: build/blocks/counter/index.js:3
+msgid "Approved reviews right now: %d."
+msgstr ""
+
+#: build/blocks/counter/index.js:3
+msgid "No approved reviews yet. Visitors get the fallback below."
+msgstr ""
+
+#. translators: 1: average rating, e.g. 4.8. 2: number of reviews.
+#: build/blocks/counter/index.js:4
+msgid "Average rating right now: %1$s out of 5, from %2$d reviews."
+msgstr ""
+
+#: build/blocks/counter/index.js:4
+msgid "No rated reviews yet. Visitors get the fallback below."
+msgstr ""
+
+#. translators: %d: number of items in stock.
+#: build/blocks/counter/index.js:5
+msgid "In stock right now: %d."
+msgstr ""
+
+#: build/blocks/counter/index.js:5
+msgid "No stock count for this product: stock isn't tracked, it's sold out, or (for a variable product) one of its variations doesn't track stock. Visitors get the fallback below."
+msgstr ""
+
+#. translators: %s: date and time the sale ends.
+#: build/blocks/counter/index.js:6
+msgid "Sale ends %s."
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "No running sale with an end date. Visitors get the fallback below until one starts."
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Uses the product of the page or product template this block is on."
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Your store hides stock amounts (WooCommerce → Settings → Products → Inventory → Stock display format), so ProofBlocks won't show them either. Visitors get the fallback below."
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Product reviews are turned off in WooCommerce (Settings → Products → Reviews), so ProofBlocks won't show a review count either. Visitors get the fallback below."
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Star ratings on reviews are turned off in WooCommerce (Settings → Products → Reviews), so ProofBlocks won't show an average rating either. Visitors get the fallback below."
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Product"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Leave empty to use the current product."
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Variation"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "All variations combined"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Whichever variation's sale ends first"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "When there is no stock count"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "When there is no running sale"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "When there is no number to show yet"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Hide the block"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Show a text instead"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Show the expired text"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Show stars"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Five stars under the number, filled to the average rating. Screen readers read the number only."
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Text instead of the number"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "e.g. Sold out"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "e.g. Be the first to review"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "No icon"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "00:00:00:00"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Position"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Right"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Mode"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Number"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Countdown"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Number settings"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Number to show"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "A number I enter"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "How many are left in stock (WooCommerce)"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "How many have sold (WooCommerce)"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Number of reviews (WooCommerce)"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Average star rating (WooCommerce)"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Value"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Prefix"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Suffix"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Animation duration (ms)"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Countdown settings"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Count down to"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "A date I choose"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "When a WooCommerce sale ends"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Target date/time"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Expired text"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+#: build/blocks/pricing-table/index.js:1
+msgid "Card style"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Icon"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Icon position"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Above number"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Beside number"
+msgstr ""
+
+#: build/blocks/counter/index.js:6
+msgid "Label"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Badge"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Mark as popular"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Popular"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Highlight style"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Border glow"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Ribbon"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Scale up"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Plan name"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+#: build/blocks/pricing-table/index.js:1
+msgid "/mo"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Toggle included"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Feature"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Remove feature"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "+ Add feature"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Get Started"
+msgstr ""
+
+#: build/blocks/pricing-table/column/index.js:1
+msgid "Empty - no button will show on the published page until you type a label here."
+msgstr ""
+
+#: build/blocks/pricing-table/index.js:1
+msgid "Basic"
+msgstr ""
+
+#: build/blocks/pricing-table/index.js:1
+msgid "Pro"
+msgstr ""
+
+#: build/blocks/pricing-table/index.js:1
+msgid "Business"
+msgstr ""
+
+#: build/blocks/pricing-table/index.js:1
+msgid "Free is limited to a soft cap of columns shown by the \"Add Column\" button. Existing extra columns still work fine."
+msgstr ""
+
+#: build/blocks/banner/block.json
+msgctxt "block title"
+msgid "Banner / CTA"
+msgstr ""
+
+#: build/blocks/banner/block.json
+msgctxt "block description"
+msgid "An image, heading, text, and call-to-action banner."
+msgstr ""
+
+#: build/blocks/banner/block.json
+msgctxt "block keyword"
+msgid "banner"
+msgstr ""
+
+#: build/blocks/banner/block.json
+msgctxt "block keyword"
+msgid "cta"
+msgstr ""
+
+#: build/blocks/banner/block.json
+msgctxt "block keyword"
+msgid "call to action"
+msgstr ""
+
+#: build/blocks/counter/block.json
+msgctxt "block title"
+msgid "Counter / Countdown"
+msgstr ""
+
+#: build/blocks/counter/block.json
+msgctxt "block description"
+msgid "An animated number counter or a countdown to a date."
+msgstr ""
+
+#: build/blocks/counter/block.json
+msgctxt "block keyword"
+msgid "counter"
+msgstr ""
+
+#: build/blocks/counter/block.json
+msgctxt "block keyword"
+msgid "countdown"
+msgstr ""
+
+#: build/blocks/counter/block.json
+msgctxt "block keyword"
+msgid "timer"
+msgstr ""
+
+#: build/blocks/pricing-table/block.json
+msgctxt "block title"
+msgid "Pricing Table"
+msgstr ""
+
+#: build/blocks/pricing-table/block.json
+msgctxt "block description"
+msgid "A pricing table with 2 or more plan columns."
+msgstr ""
+
+#: build/blocks/pricing-table/block.json
+msgctxt "block keyword"
+msgid "pricing"
+msgstr ""
+
+#: build/blocks/pricing-table/block.json
+msgctxt "block keyword"
+msgid "plans"
+msgstr ""
+
+#: build/blocks/pricing-table/block.json
+msgctxt "block keyword"
+msgid "table"
+msgstr ""
+
+#: build/blocks/pricing-table/column/block.json
+msgctxt "block title"
+msgid "Pricing Column"
+msgstr ""
+
+#: build/blocks/pricing-table/column/block.json
+msgctxt "block description"
+msgid "A single plan column inside a Pricing Table."
+msgstr ""

@@ -5,7 +5,10 @@ import { PanelBody, Button, ButtonGroup, TextControl, RangeControl, SelectContro
 import { FREE_TOKEN_PRESETS } from '../../shared/design-tokens';
 import { COUNTER_ICONS } from '../../shared/icons';
 import { DesignPresetPicker } from '../../shared/design-presets';
-import WooSourceControls, { useLiveProduct } from './woo-source';
+import WooSourceControls, { useLiveProduct, liveValueFor } from './woo-source';
+
+// numberSource => the kind WooSourceControls / liveValueFor() use.
+const WOO_NUMBER_KINDS = { wc_stock: 'stock', wc_sold: 'sold', wc_reviews: 'reviews', wc_rating: 'rating' };
 
 function TokenSwatches( { value, onChange, allowNone = false } ) {
 	return (
@@ -184,17 +187,21 @@ export default function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps( { className } );
 
 	const wooActive = !! ( window.proofblocksWoo && window.proofblocksWoo.active );
-	const isWooNumber = 'number' === mode && 'wc_stock' === numberSource;
+	const wooKind = 'number' === mode ? WOO_NUMBER_KINDS[ numberSource ] : undefined;
+	const isWooNumber = !! wooKind;
 	const isWooCountdown = 'countdown' === mode && 'wc_sale' === countdownSource;
 	// One request feeds both the sidebar status and the canvas preview.
 	const live = useLiveProduct( isWooNumber || isWooCountdown ? productId : 0, variationId );
 
 	let previewValue = __( '00:00:00:00', 'proofblocks' );
 	if ( isWooNumber ) {
-		previewValue = live.stock ? `${ numberPrefix }${ live.stock }${ numberSuffix }` : `${ numberPrefix }#${ numberSuffix }`;
+		const liveValue = 'rating' === wooKind ? live.ratingText : liveValueFor( wooKind, live );
+		previewValue = liveValue ? `${ numberPrefix }${ liveValue }${ numberSuffix }` : `${ numberPrefix }#${ numberSuffix }`;
 	} else if ( 'number' === mode ) {
 		previewValue = `${ numberPrefix }${ numberValue }${ numberSuffix }`;
 	}
+	const showStars = 'rating' === wooKind && false !== attributes.ratingStars;
+	const starsWidth = live.rating ? Math.min( 100, ( live.rating / 5 ) * 100 ) : 0;
 
 	return (
 		<>
@@ -234,12 +241,15 @@ export default function Edit( { attributes, setAttributes } ) {
 								options={ [
 									{ value: 'manual', label: __( 'A number I enter', 'proofblocks' ) },
 									{ value: 'wc_stock', label: __( 'How many are left in stock (WooCommerce)', 'proofblocks' ) },
+									{ value: 'wc_sold', label: __( 'How many have sold (WooCommerce)', 'proofblocks' ) },
+									{ value: 'wc_reviews', label: __( 'Number of reviews (WooCommerce)', 'proofblocks' ) },
+									{ value: 'wc_rating', label: __( 'Average star rating (WooCommerce)', 'proofblocks' ) },
 								] }
 								onChange={ ( value ) => setAttributes( { numberSource: value } ) }
 							/>
 						) }
 						{ isWooNumber ? (
-							<WooSourceControls attributes={ attributes } setAttributes={ setAttributes } kind="stock" live={ live } />
+							<WooSourceControls attributes={ attributes } setAttributes={ setAttributes } kind={ wooKind } live={ live } />
 						) : (
 							<TextControl
 								label={ __( 'Value', 'proofblocks' ) }
@@ -258,8 +268,8 @@ export default function Edit( { attributes, setAttributes } ) {
 							value={ numberSuffix }
 							onChange={ ( value ) => setAttributes( { numberSuffix: value } ) }
 						/>
-						{ /* Stock is shown as is, never counted up - see render-counter.php. */ }
-						{ ! isWooNumber && (
+						{ /* Stock and the rating are shown as is, never counted up - see render-counter.php. */ }
+						{ 'stock' !== wooKind && 'rating' !== wooKind && (
 							<RangeControl
 								label={ __( 'Animation duration (ms)', 'proofblocks' ) }
 								min={ 500 }
@@ -346,6 +356,11 @@ export default function Edit( { attributes, setAttributes } ) {
 				<span className="proofblocks-counter__value">
 					{ previewValue }
 				</span>
+				{ showStars && (
+					<span className="proofblocks-counter__stars" aria-hidden="true">
+						<span className="proofblocks-counter__stars-fill" style={ { width: `${ starsWidth }%` } } />
+					</span>
+				) }
 				<RichText
 					tagName="span"
 					className="proofblocks-counter__label"

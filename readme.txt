@@ -3,7 +3,7 @@ Contributors: lukystile
 Tags: pricing table, call to action, countdown timer, animated counter, gutenberg blocks
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -35,6 +35,7 @@ Two blocks in one:
 * **Countdown**: a live countdown timer to any date, with your own message once it expires. Good for sales, launches and early-bird deadlines.
 * **WooCommerce sale countdown** (optional): count down to when a product's sale really ends, read straight from the product (or one of its variations) instead of a date you type in. When the sale ends or changes, the countdown follows, even on cached pages. When there's no running sale, the block hides itself or shows your expired text. It never invents a deadline.
 * **WooCommerce stock counter** (optional): show how many of a product (or one variation, or all variations together) are really left, e.g. "Only 7 left". It follows your stock, even on cached pages. When stock isn't tracked or the product sells out, the block hides itself or shows your own text, such as "Sold out". It never invents a number.
+* **WooCommerce sales and reviews counters** (optional): show how many of a product have really sold ("1,240 sold"), how many reviews it has, or its average star rating with stars ("4.8 ★★★★★"), straight from WooCommerce. They follow the product even on cached pages. A product with no sales or reviews yet gets your fallback (hidden, or a text such as "Be the first to review") instead of a zero.
 
 = Looks good in one click =
 
@@ -129,6 +130,14 @@ By default, nothing. If you want the plugin's settings removed when you delete i
 5. Building a Pricing Table in the Block Editor: design presets, colors, corners, card style and entrance animation in the sidebar.
 
 == Changelog ==
+
+= 1.2.0 =
+* Counter can now show three more real numbers from a WooCommerce product: units sold, number of reviews, and average star rating. Pick them under "Number to show".
+* Units sold and the review count count up like a normal counter; the average rating keeps its decimal (in your site's number format) and can show five stars filled to the rating. The stars are decorative: screen readers read the number.
+* Nothing sold or reviewed yet means no number: the block hides itself or shows a text of your choice. It never shows "0 sold".
+* All three are re-checked live on page load, so they stay correct on cached pages.
+* Units sold isn't public in WooCommerce, so ProofBlocks only reveals it for a product a published Counter shows: the counter's request carries a signature the site checks. Review counts and ratings follow WooCommerce's own settings: turn reviews or star ratings off there, and these counters show their fallback.
+* For developers: the `proofblocks/v1/wc-product/{id}` endpoint now also returns `reviews`, `rating`, `ratingText` and (with a valid signature, or for editors) `sold`, and a `proofblocks:livevalue` event fires whenever one of these counters' value is set.
 
 = 1.1.1 =
 * Counter can now show how many of a WooCommerce product are really left in stock. Pick a product (or leave it empty to use the product the block is on), and optionally a single variation. For a variable product, the default is all variations added together.

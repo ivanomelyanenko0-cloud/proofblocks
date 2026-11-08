@@ -28,6 +28,10 @@ function animateNumber( el ) {
 
 	var start = null;
 	window.requestAnimationFrame( function tick( timestamp ) {
+		// A live WooCommerce number can change (or disappear) mid-animation when its re-check comes back; showLiveNumber() has then already written the final text.
+		if ( el.pbLiveSettled ) {
+			return;
+		}
 		if ( ! start ) {
 			start = timestamp;
 		}
@@ -180,6 +184,69 @@ function refreshStock( el ) {
 		.catch( function () {} );
 }
 
+/**
+ * Units sold, review count and average rating (data-pb-source wc_sold /
+ * wc_reviews / wc_rating). The baked-in number shows first - counted up for
+ * sold and reviews, printed as is for the rating - and the live value
+ * replaces it if a cached page had an older one. Fires
+ * `proofblocks:livevalue` on the block (detail.source, detail.value: number
+ * or null) every time the value is (re)set, so ProofBlocks Pro can apply
+ * its display rules to the real number.
+ */
+var LIVE_KEYS = { wc_sold: 'sold', wc_reviews: 'reviews', wc_rating: 'rating' };
+
+function showLiveNumber( el, value, text, initial ) {
+	var source = el.getAttribute( 'data-pb-source' );
+	var valueEl = el.querySelector( '.proofblocks-counter__value' );
+	var hasValue = value > 0;
+	var prefix = el.getAttribute( 'data-pb-prefix' ) || '';
+	var suffix = el.getAttribute( 'data-pb-suffix' ) || '';
+
+	el.setAttribute( 'data-pb-value', hasValue ? value : '' );
+	el.classList.toggle( 'proofblocks-counter--no-sale', ! hasValue && 'hide' === el.getAttribute( 'data-pb-fallback' ) );
+
+	if ( valueEl ) {
+		if ( ! hasValue ) {
+			el.pbLiveSettled = true;
+			valueEl.textContent = el.getAttribute( 'data-pb-empty-text' ) || '';
+		} else if ( 'wc_rating' === source ) {
+			if ( text ) {
+				valueEl.textContent = prefix + text + suffix;
+			}
+			var fill = el.querySelector( '.proofblocks-counter__stars-fill' );
+			if ( fill ) {
+				fill.style.width = Math.min( 100, Math.max( 0, value / 5 * 100 ) ) + '%';
+			}
+		} else if ( ! initial ) {
+			el.pbLiveSettled = true;
+			valueEl.textContent = prefix + value + suffix;
+		}
+	}
+
+	el.dispatchEvent( new window.CustomEvent( 'proofblocks:livevalue', { bubbles: true, detail: { source: source, value: hasValue ? value : null } } ) );
+}
+
+function refreshLiveNumber( el ) {
+	var url = el.getAttribute( 'data-pb-live-url' );
+	var key = LIVE_KEYS[ el.getAttribute( 'data-pb-source' ) ];
+	if ( ! url || ! key || ! window.fetch ) {
+		return;
+	}
+
+	window.fetch( url, { credentials: 'omit' } )
+		.then( function ( response ) {
+			return response.ok ? response.json() : Promise.reject();
+		} )
+		.then( function ( data ) {
+			var live = data && data[ key ] > 0 ? data[ key ] : null;
+			var baked = parseFloat( el.getAttribute( 'data-pb-value' ) ) || null;
+			if ( live !== baked ) {
+				showLiveNumber( el, live, data ? data.ratingText : '', false );
+			}
+		} )
+		.catch( function () {} );
+}
+
 function initStock( el ) {
 	showStock( el, parseInt( el.getAttribute( 'data-pb-value' ), 10 ) || null );
 	refreshStock( el );
@@ -225,9 +292,21 @@ function initCounters() {
 			return;
 		}
 
-		if ( 'wc_stock' === el.getAttribute( 'data-pb-source' ) ) {
+		var source = el.getAttribute( 'data-pb-source' );
+
+		if ( 'wc_stock' === source ) {
 			initStock( el );
 			return;
+		}
+
+		if ( LIVE_KEYS[ source ] ) {
+			var initialValue = parseFloat( el.getAttribute( 'data-pb-value' ) ) || null;
+			showLiveNumber( el, initialValue, '', true );
+			refreshLiveNumber( el );
+			// The rating keeps the server-formatted text ("4.8" / "4,8"); nothing left to count up when there's no value.
+			if ( 'wc_rating' === source || ! initialValue ) {
+				return;
+			}
 		}
 
 		if ( 'basic' !== style ) {

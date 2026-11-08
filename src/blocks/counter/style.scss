@@ -113,3 +113,36 @@
 .wp-block-proofblocks-counter.proofblocks-counter--no-sale {
 	display: none !important;
 }
+
+// Star rating next to a WooCommerce average rating: five outline stars with
+// a filled copy clipped to the rating's share of the width. Decorative
+// (aria-hidden) - the number itself carries the rating.
+.proofblocks-counter__stars {
+	display: inline-block;
+	font-size: 1.1em;
+	letter-spacing: .1em;
+	line-height: 1;
+	margin-top: .3em;
+	position: relative;
+	white-space: nowrap;
+
+	&::before {
+		content: "\2605\2605\2605\2605\2605";
+		opacity: .25;
+	}
+}
+
+.proofblocks-counter__stars-fill {
+	color: var(--pb-color-accent, #f59e0b);
+	inset: 0 auto 0 0;
+	overflow: hidden;
+	position: absolute;
+
+	&::before {
+		content: "\2605\2605\2605\2605\2605";
+	}
+}
+
+.proofblocks-counter--icon-inline .proofblocks-counter__stars {
+	align-self: center;
+}
